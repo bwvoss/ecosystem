@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+  synced_folders: [["./files", "/ansible", "create: true"]]
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  playbook: kenna.yml
+  ansible_verbose: true
+  ansible_verbosity: 2
+
+platforms:
+  - name: trusty64
+    driver_config:
+      box: ubuntu/trusty64
+
+suites:
+  - name: kenna-vm

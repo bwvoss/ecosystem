@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'rake'
+
+group :integration do
+  gem 'kitchen-vagrant', '~> 0.19.0'
+  gem 'vagrant-wrapper', '~> 2.0.3'
+  gem 'kitchen-ansible', '~> 0.0.30'
+end
+
