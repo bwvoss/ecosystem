@@ -3,7 +3,7 @@ require 'rescuetime/parse_date_to_utc'
 describe Rescuetime::ParseDateToUtc do
   it 'transforms the date from the timezone to utc for each item' do
     timezone = 'America/Chicago'
-    original_date = "2015-08-03T08:00:00"
+    original_date = '2015-08-03T08:00:00'
     parsed_rows = [{
       date: original_date
     }]

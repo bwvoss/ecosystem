@@ -5,7 +5,10 @@ describe Http::Get do
     response = {}
     mock_http = double(get: response)
 
-    result = described_class.execute(get_url: 'http://example.com', http: mock_http)
+    result = described_class.execute(
+      get_url: 'http://example.com',
+      http: mock_http
+    )
 
     expect(result.get_response).to eq(response)
   end

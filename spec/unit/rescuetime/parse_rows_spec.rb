@@ -3,12 +3,12 @@ require 'rescuetime/parse_rows'
 describe Rescuetime::ParseRows do
   let(:response) do
     {
-      "rows" => [
-        ["2015-08-03T08:00:00",
+      'rows' => [
+        ['2015-08-03T08:00:00',
          519,
          1,
-         "unixgeeks.org",
-         "General Reference & Learning",
+         'unixgeeks.org',
+         'General Reference & Learning',
          3]
       ]
     }
@@ -29,11 +29,11 @@ describe Rescuetime::ParseRows do
     end
 
     specify 'activity' do
-      expect(parsed_rows.first[:activity]).to eq("unixgeeks.org")
+      expect(parsed_rows.first[:activity]).to eq('unixgeeks.org')
     end
 
     specify 'category' do
-      expect(parsed_rows.first[:category]).to eq("General Reference & Learning")
+      expect(parsed_rows.first[:category]).to eq('General Reference & Learning')
     end
 
     specify 'time_spent_in_seconds' do
@@ -41,7 +41,7 @@ describe Rescuetime::ParseRows do
     end
 
     specify 'date' do
-      expect(parsed_rows.first[:date]).to eq("2015-08-03T08:00:00")
+      expect(parsed_rows.first[:date]).to eq('2015-08-03T08:00:00')
     end
   end
 end

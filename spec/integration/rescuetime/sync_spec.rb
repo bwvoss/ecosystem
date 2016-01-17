@@ -5,7 +5,7 @@ require 'spec_helper'
 require 'time'
 
 describe 'Rescuetime Data Sync' do
-  let(:utc_date) { Time.parse("2015-10-02 8:35").utc }
+  let(:utc_date) { Time.parse('2015-10-02 8:35').utc }
   let(:rescuetime_api_domain) { 'http://localhost:9292/rescuetime' }
   let(:rescuetime_deduplication_api_domain) do
     'http://localhost:9292/rescuetime/deduplication'
