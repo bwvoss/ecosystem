@@ -5,6 +5,7 @@ RSpec.configure do |config|
     require 'database_cleaner'
     @connection_string = 'postgres://postgres@localhost:2200/postgres'
     @db = Sequel.connect(@connection_string)
+
     Sequel.extension :migration
     Sequel::Migrator.run(@db, 'migrations')
   end

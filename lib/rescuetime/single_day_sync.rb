@@ -1,4 +1,5 @@
 require 'light-service'
+require 'metrics/observers/duration'
 require 'rescuetime/build_url'
 require 'rescuetime/parse_rows'
 require 'rescuetime/parse_date_to_utc'
@@ -12,7 +13,8 @@ module Rescuetime
   class SingleDaySync
     extend LightService::Organizer
     def self.call(configuration)
-      with(configuration).reduce(actions)
+      duration_observer = Metrics::Observers::Duration.new(configuration[:metrics], :rescuetime)
+      with(configuration).around_each(duration_observer).reduce(actions)
     end
 
     def self.actions

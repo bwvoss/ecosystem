@@ -6,7 +6,7 @@ gem 'pry'
 gem 'rake',                   '~> 10.4.2'
 gem 'flog',                   '~> 4.3.2'
 gem 'rubocop',                '~> 0.33.0', require: false
-gem 'light-service', git: 'https://github.com/bwvoss/light-service', branch: 'adds_around_each'
+gem 'light-service', git: 'https://github.com/adomokos/light-service', branch: 'master'
 
 group :datastore do
   gem 'pg',     '~> 0.18.2'

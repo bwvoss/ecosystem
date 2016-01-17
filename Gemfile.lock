@@ -1,7 +1,7 @@
 GIT
-  remote: https://github.com/bwvoss/light-service
-  revision: c005452e21eb137fcfe0deadc3ce0bc5ed4b25b6
-  branch: adds_around_each
+  remote: https://github.com/adomokos/light-service
+  revision: cca57a3a506387832b46eaa38fc251998808cd46
+  branch: master
   specs:
     light-service (0.6.0)
       activesupport (>= 3.0)

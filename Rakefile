@@ -5,6 +5,16 @@ task :test do
   system('bundle exec rspec && bundle exec rubocop')
 end
 
+namespace :db do
+  task :drop do
+    system("dropdb -U postgres -h localhost -p 2200 postgres")
+  end
+
+  task :create do
+    system("createdb -U postgres -h localhost -p 2200 postgres")
+  end
+end
+
 namespace :services do
   namespace :postgresql do
     task :up do
