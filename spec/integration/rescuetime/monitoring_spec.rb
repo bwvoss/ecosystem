@@ -1,7 +1,7 @@
 require 'app'
 require 'httparty'
 require 'sequel'
-require 'metrics/receivers/postgresql'
+require 'metrics/receivers/rds'
 require 'spec_helper'
 require 'time'
 
@@ -16,12 +16,12 @@ describe 'Metrics Captured during a rescuetime sync' do
     c
   end
 
-  it 'captures the duration of every action', services: [:postgresql] do
+  it 'captures the duration of every action', services: [:rds] do
     App.sync_rescuetime(
       db: db,
       table: interval_table,
       http: HTTParty,
-      metrics: Metrics::Receivers::Postgresql.new(db),
+      metrics: Metrics::Receivers::Rds.new(db),
       api_domain: rescuetime_api_domain,
       api_key: 'some-test-credential',
       datetime: utc_date,
@@ -34,7 +34,8 @@ describe 'Metrics Captured during a rescuetime sync' do
     actions_measured = duration_metrics.map do |metric|
       metric[:action]
     end
-    expect(actions_measured).to eq(Rescuetime::SingleDaySync.actions.map(&:to_s))
+    actions = Rescuetime::SingleDaySync.actions.map(&:to_s)
+    expect(actions_measured).to eq(actions)
   end
 end
 

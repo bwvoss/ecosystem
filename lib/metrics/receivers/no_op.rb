@@ -1,7 +1,7 @@
 module Metrics
   module Receivers
     class NoOp
-      def push(event)
+      def <<(_event)
       end
     end
   end

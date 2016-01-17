@@ -1,13 +1,13 @@
 module Metrics
   module Receivers
-    class Postgresql
+    class Rds
       def initialize(db)
         @db = db
       end
 
-      def push(event)
+      def <<(event)
         type = event.delete(:type)
-        @db["#{type}_metric".to_sym].insert(event)
+        @db["#{type}_metric".to_sym] << event
       end
     end
   end

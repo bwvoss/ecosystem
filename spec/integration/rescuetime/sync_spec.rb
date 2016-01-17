@@ -32,7 +32,7 @@ describe 'Rescuetime Data Sync' do
     )
   end
 
-  it 'for a day', services: [:postgresql] do
+  it 'for a day', services: [:rds] do
     expect(db[interval_table].count).to eq(0)
 
     sync
@@ -40,7 +40,7 @@ describe 'Rescuetime Data Sync' do
     expect(db[interval_table].count).to eq(68)
   end
 
-  it 'does not copy data', services: [:postgresql] do
+  it 'does not copy data', services: [:rds] do
     expect(db[interval_table].count).to eq(0)
 
     sync
@@ -52,7 +52,7 @@ describe 'Rescuetime Data Sync' do
     expect(db[interval_table].count).to eq(68)
   end
 
-  it 'saves only new data from rescuetime', services: [:postgresql] do
+  it 'saves only new data from rescuetime', services: [:rds] do
     expect(db[interval_table].count).to eq(0)
 
     sync

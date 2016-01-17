@@ -1,7 +1,5 @@
 RSpec.configure do |config|
-  class TestDependencyServiceError < StandardError; end
-
-  config.before(:all, services: [:postgresql]) do
+  config.before(:all, services: [:rds]) do
     require 'database_cleaner'
     @connection_string = 'postgres://postgres@localhost:2200/postgres'
     @db = Sequel.connect(@connection_string)
@@ -12,7 +10,7 @@ RSpec.configure do |config|
 
   config.around(:each) do |example|
     services = example.metadata[:services]
-    if services && services.include?(:postgresql)
+    if services && services.include?(:rds)
       require 'database_cleaner'
       DatabaseCleaner[:sequel, { connection: @db }]
       DatabaseCleaner.strategy = :truncation
