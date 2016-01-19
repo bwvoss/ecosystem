@@ -21,15 +21,16 @@ describe 'Metrics Captured during a rescuetime sync' do
       db: db,
       table: interval_table,
       http: HTTParty,
-      metrics: Metrics::Receivers::Rds.new(db),
+      metric_receiver: Metrics::Receivers::Rds.new(db),
       api_domain: rescuetime_api_domain,
       api_key: 'some-test-credential',
       datetime: utc_date,
       timezone: 'America/Chicago'
     )
 
-    duration_metrics = db[:duration_metric].where(service: "rescuetime")
-    expect(duration_metrics.count).to eq(Rescuetime::SingleDaySync.actions.count)
+    duration_metrics = db[:duration_metric].where(service: 'rescuetime')
+    expect(duration_metrics.count)
+      .to eq(Rescuetime::SingleDaySync.actions.count)
 
     actions_measured = duration_metrics.map do |metric|
       metric[:action]
