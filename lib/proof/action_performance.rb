@@ -1,20 +1,19 @@
 module Proof
   class ActionPerformance
-    def initialize(db, threshold, time_range_utc)
+    def initialize(db, duration_threshold, from_time_utc)
       @db = db
-      @threshold = threshold
-      @time_range_utc = time_range_utc
+      @duration_threshold = duration_threshold
+      @from_time_utc = from_time_utc
     end
 
     def check!
-      @passed = @db
-        .where("duration >= #{@threshold}")
-        .filter('time > ?', @time_range_utc)
-        .count == 0
+      @check_result = @db.where("duration >= #{@duration_threshold}")
+                      .filter('time > ?', @from_time_utc)
+                      .count == 0
     end
 
     def passed?
-      @passed
+      @check_result
     end
   end
 end

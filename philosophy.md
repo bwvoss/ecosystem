@@ -12,8 +12,6 @@ to run for usual development
 
 unit -> component -> integration -> end-to-end/system
 
-Every item is a composable piece of the puzzle.
-
 Unit [fakes]
 this ensures a single unit works in isolation.  This will have the most isolation and speed, and which allows us to get precise with use cases to test.
 
@@ -28,10 +26,10 @@ What exactly is important for perf testing?  Hardware?  Metrics? Do I mock servi
 
 A component also implies idempotence, and that it can be executed as an independent process.
 
-Integration
+Integration/Feature
+Shows that the components are hooked in together correctly
 
-End-to-End/System
-End-to-end matters on who is consuming the component(s)  -- is it through a worker?  Through a web interface?  This matters because the system should behave differently if not dealing with a user online and thus different end-to-end requirements.
+End-to-end matters on who is consuming the component(s) -- is it through a worker?  Through a web interface?  This matters because the system should behave differently if not dealing with a user online and thus different end-to-end requirements.
 
 Concerns:
 - system response to failure (chaos)

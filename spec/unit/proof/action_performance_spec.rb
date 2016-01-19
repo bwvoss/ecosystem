@@ -1,18 +1,40 @@
 require 'proof/action_performance'
 
-describe Proof::ActionPerformance  do
-  context 'ensures no action takes longer than a threshold' do
-    it 'passes when under 0.75 seconds' do
-    end
-
-    it 'passes when 0.75 seconds'
-    it 'fails when over 0.75 seconds'
+class MockDb
+  attr_reader :count
+  def initialize(count)
+    @count = count
   end
 
-  context 'ensures an entire run takes less than a threshold seconds' do
-    it 'passes when under 4 seconds'
-    it 'passes when 4 seconds'
-    it 'fails when over 4 seconds'
+  def where(_query)
+    self
+  end
+
+  def filter(_query, _data)
+    self
+  end
+end
+
+describe Proof::ActionPerformance do
+  let(:duration_threshold) { 1 }
+  let(:from_time_utc) { Time.now.utc }
+
+  it 'passes when no records match the query with duration in the time range' do
+    db = MockDb.new(0)
+    proof = described_class.new(db, duration_threshold, from_time_utc)
+
+    proof.check!
+
+    expect(proof).to be_passed
+  end
+
+  it 'fails when records exist within time range and duration' do
+    db = MockDb.new(1)
+    proof = described_class.new(db, duration_threshold, from_time_utc)
+
+    proof.check!
+
+    expect(proof).not_to be_passed
   end
 end
 
