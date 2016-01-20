@@ -3,17 +3,18 @@ require 'metrics/observers/duration'
 describe Metrics::Observers::Duration do
   let(:metric_receiver) { [] }
   let(:service) { :test_service }
-  let(:context) { {} }
+  let(:run_uuid) { '1jksdfij5' }
+  let(:context) { { run_uuid: run_uuid } }
   let(:action) { Class }
 
   it 'executes the given block and returns the result' do
-      observer = described_class.new(metric_receiver, :test_service)
+    observer = described_class.new(metric_receiver, :test_service)
 
-      result = observer.call(action, context) do
-        2 + 2
-      end
+    result = observer.call(action, context) do
+      2 + 2
+    end
 
-      expect(result).to eq(4)
+    expect(result).to eq(4)
   end
 
   context 'sends the following items to the metric store:' do
@@ -40,6 +41,10 @@ describe Metrics::Observers::Duration do
 
     specify 'duration' do
       expect(metric(:duration)).not_to be_nil
+    end
+
+    specify 'run_uuid' do
+      expect(metric(:run_uuid)).to eq(run_uuid)
     end
 
     specify 'service as a string' do

@@ -1,4 +1,4 @@
-require 'proof/action_performance'
+require 'proof/action_duration'
 
 class MockDb
   attr_reader :count
@@ -15,7 +15,7 @@ class MockDb
   end
 end
 
-describe Proof::ActionPerformance do
+describe Proof::ActionDuration do
   let(:duration_threshold) { 1 }
   let(:from_time_utc) { Time.now.utc }
 

@@ -6,6 +6,7 @@ Sequel.migration do
       primary_key :id
       DateTime :time
       String :host
+      String :run_uuid
       String :action
       String :service
       Float :duration

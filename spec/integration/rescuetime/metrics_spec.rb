@@ -9,6 +9,7 @@ describe 'Metrics Captured during a rescuetime sync' do
   let(:utc_date) { Time.parse('2015-10-02 8:35').utc }
   let(:rescuetime_api_domain) { 'http://localhost:9292/rescuetime' }
   let(:interval_table) { :rescuetime_interval }
+  let(:run_uuid) { 'lsdkfj278' }
 
   let(:db) do
     c = Sequel.connect('postgres://postgres@localhost:2200/postgres')
@@ -22,6 +23,7 @@ describe 'Metrics Captured during a rescuetime sync' do
       table: interval_table,
       http: HTTParty,
       metric_receiver: Metrics::Receivers::Rds.new(db),
+      run_uuid: run_uuid,
       api_domain: rescuetime_api_domain,
       api_key: 'some-test-credential',
       datetime: utc_date,

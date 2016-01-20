@@ -1,5 +1,5 @@
 module Proof
-  class ActionPerformance
+  class ActionDuration
     def initialize(db, duration_threshold, from_time_utc)
       @db = db
       @duration_threshold = duration_threshold

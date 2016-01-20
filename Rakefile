@@ -5,10 +5,14 @@ task :test do
   system('bundle exec rspec && bundle exec rubocop')
 end
 
+task :gem_audit do
+  system('bundle exec bundle-audit update && bundle exec bundle-audit')
+end
+
 namespace :db do
   task :reset do
-    system("dropdb -U postgres -h localhost -p 2200 postgres")
-    system("createdb -U postgres -h localhost -p 2200 postgres")
+    system('dropdb -U postgres -h localhost -p 2200 postgres')
+    system('createdb -U postgres -h localhost -p 2200 postgres')
   end
 end
 

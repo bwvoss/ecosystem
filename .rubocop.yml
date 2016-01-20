@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - 'infrastructure/**/*'
     - 'service_proxy/**/*'
+    - 'lib/datastore/deduplicated_insert.rb'
     - 'migrations/*'
     - 'Gemfile'
 
@@ -16,3 +17,6 @@ Style/TrailingBlankLines:
 
 Metrics/MethodLength:
   Max: 15
+
+Metrics/ClassLength:
+  Max: 30

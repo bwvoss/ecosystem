@@ -6,7 +6,7 @@ module Metrics
         @service = service
       end
 
-      def call(action, _context)
+      def call(action, context)
         start_time = Time.now
         result = yield
         duration = Time.now - start_time
@@ -16,6 +16,7 @@ module Metrics
           host: Socket.gethostname,
           action: action.to_s,
           duration: duration,
+          run_uuid: context.fetch(:run_uuid),
           type: 'duration',
           service: @service.to_s
         }

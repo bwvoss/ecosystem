@@ -12,6 +12,7 @@ describe 'Rescuetime Data Sync' do
     'http://localhost:9292/rescuetime/deduplication'
   end
   let(:interval_table) { :rescuetime_interval }
+  let(:run_uuid) { 'lskdjf838' }
 
   let(:db) do
     c = Sequel.connect('postgres://postgres@localhost:2200/postgres')
@@ -25,6 +26,7 @@ describe 'Rescuetime Data Sync' do
       table: interval_table,
       http: HTTParty,
       metric_receiver: Metrics::Receivers::NoOp.new,
+      run_uuid: run_uuid,
       api_domain: api_domain,
       api_key: 'some-test-credential',
       datetime: utc_date,
