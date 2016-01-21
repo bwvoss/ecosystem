@@ -10,12 +10,7 @@ describe 'Metrics Captured during a rescuetime sync' do
   let(:rescuetime_api_domain) { 'http://localhost:9292/rescuetime' }
   let(:interval_table) { :rescuetime_interval }
   let(:run_uuid) { 'lsdkfj278' }
-
-  let(:db) do
-    c = Sequel.connect('postgres://postgres@localhost:2200/postgres')
-    Sequel.database_timezone = :utc
-    c
-  end
+  let(:db) { @db }
 
   it 'captures the duration of every action', services: [:rds] do
     App.sync_rescuetime(

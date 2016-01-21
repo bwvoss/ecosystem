@@ -1,7 +1,8 @@
 RSpec.configure do |config|
   config.before(:all, services: [:rds]) do
     require 'database_cleaner'
-    @connection_string = 'postgres://postgres@localhost:2200/postgres'
+    # @connection_string = 'postgres://postgres@localhost:2200/postgres'
+    @connection_string = 'postgres://benvoss@localhost/postgres'
     @db = Sequel.connect(@connection_string)
 
     Sequel.extension :migration

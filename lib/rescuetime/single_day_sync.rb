@@ -12,17 +12,17 @@ module Rescuetime
     def self.call(configuration)
       with(configuration)
         .around_each(observer(configuration))
-        .reduce(actions(configuration))
+        .reduce(actions)
     end
 
-    def self.actions(configuration = {})
-      configuration.fetch(:actions, [
+    def self.actions
+      [
         Rescuetime::BuildUrl,
         Http::Get,
         Rescuetime::ParseRows,
         Rescuetime::ParseDateToUtc,
         Datastore::DeduplicatedInsert
-      ])
+      ]
     end
 
     def self.observer(configuration)

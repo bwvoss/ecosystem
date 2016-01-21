@@ -13,12 +13,7 @@ describe 'Rescuetime Data Sync' do
   end
   let(:interval_table) { :rescuetime_interval }
   let(:run_uuid) { 'lskdjf838' }
-
-  let(:db) do
-    c = Sequel.connect('postgres://postgres@localhost:2200/postgres')
-    Sequel.database_timezone = :utc
-    c
-  end
+  let(:db) { @db }
 
   def sync(api_domain = rescuetime_api_domain)
     App.sync_rescuetime(

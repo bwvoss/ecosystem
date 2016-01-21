@@ -1,10 +1,11 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
-require 'timers'
-require 'metric/receivers/rds'
-require 'metric/cpu'
 
 namespace :system_metrics do
   task :poll do
+    require 'timers'
+    require 'metric/receivers/rds'
+    require 'metric/cpu'
+
     timers = Timers::Group.new
     metric_receiver = Metric::Receivers::Rds.new(db[:system_metric])
     cpu = Metric::Cpu.new
@@ -33,8 +34,11 @@ end
 
 namespace :db do
   task :reset do
-    system('dropdb -U postgres -h localhost -p 2200 postgres')
-    system('createdb -U postgres -h localhost -p 2200 postgres')
+    # system('dropdb -U postgres -h localhost -p 2200 postgres')
+    # system('createdb -U postgres -h localhost -p 2200 postgres')
+
+    system('dropdb postgres')
+    system('createdb postgres')
   end
 end
 

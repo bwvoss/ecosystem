@@ -7,8 +7,13 @@ module Proof
     end
 
     def check!
-      @check_result = @db.where(run_uuid: @run_uuid)
-                      .sum(:duration) < @duration_threshold
+      duration = @db.where(run_uuid: @run_uuid)
+                 .sum(:duration)
+      if duration
+        @check_result = duration < @duration_threshold
+      else
+        @check_result = true
+      end
     end
 
     def passed?

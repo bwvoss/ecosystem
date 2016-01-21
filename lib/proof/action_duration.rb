@@ -8,7 +8,7 @@ module Proof
 
     def check!
       @check_result = @db.where("duration >= #{@duration_threshold}")
-                      .filter('time > ?', @from_time_utc)
+                      .filter('time >= ?', @from_time_utc)
                       .count == 0
     end
 

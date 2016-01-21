@@ -6,7 +6,7 @@ Sequel.migration do
       primary_key :id
       DateTime :time
       String :host
-      String :cpu_percentage_used
+      Float :cpu_percentage_used
       String :top_cpu_processes
     end
   end
