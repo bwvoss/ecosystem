@@ -1,25 +1,12 @@
 require 'proof/full_run_duration'
-
-class MockDb
-  def initialize(sum)
-    @sum = sum
-  end
-
-  def where(_query)
-    self
-  end
-
-  def sum(_column)
-    @sum
-  end
-end
+require 'test_doubles/db'
 
 describe Proof::FullRunDuration do
   let(:duration_threshold) { 1 }
   let(:run_uuid) { 'sdf8sdhj' }
 
   it 'passes when records that match the run_uuid do not exceed threshold' do
-    db = MockDb.new(0.5)
+    db = TestDoubles::Db.new(sum: 0.5)
     proof = described_class.new(db, duration_threshold, run_uuid)
 
     proof.check!
@@ -28,7 +15,7 @@ describe Proof::FullRunDuration do
   end
 
   it 'fails when records duration match threshold' do
-    db = MockDb.new(1)
+    db = TestDoubles::Db.new(sum: 1)
     proof = described_class.new(db, duration_threshold, run_uuid)
 
     proof.check!
@@ -37,7 +24,7 @@ describe Proof::FullRunDuration do
   end
 
   it 'fails when records duration exceed threshold' do
-    db = MockDb.new(1.1)
+    db = TestDoubles::Db.new(sum: 1.1)
     proof = described_class.new(db, duration_threshold, run_uuid)
 
     proof.check!
