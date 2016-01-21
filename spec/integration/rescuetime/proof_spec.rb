@@ -1,7 +1,7 @@
 require 'app'
 require 'httparty'
 require 'sequel'
-require 'metrics/receivers/rds'
+require 'metric/receivers/rds'
 require 'proof/action_duration'
 require 'proof/full_run_duration'
 require 'spec_helper'
@@ -37,7 +37,7 @@ describe 'System proofs' do
         db: db,
         actions: [SlowAction],
         run_uuid: run_uuid,
-        metric_receiver: Metrics::Receivers::Rds.new(db))
+        metric_receiver: Metric::Receivers::Rds.new(db))
 
       proof = Proof::ActionDuration.new(
         db[:duration_metric],
@@ -54,7 +54,7 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [FastAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db))
+        metric_receiver: Metric::Receivers::Rds.new(db))
 
       proof = Proof::ActionDuration.new(
         db[:duration_metric],
@@ -71,7 +71,7 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [SlowAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db))
+        metric_receiver: Metric::Receivers::Rds.new(db))
 
       proof = Proof::ActionDuration.new(
         db[:duration_metric],
@@ -90,7 +90,7 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [SlowAction, FastAction, FastAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db))
+        metric_receiver: Metric::Receivers::Rds.new(db))
 
       proof = Proof::FullRunDuration.new(
         db[:duration_metric],
@@ -107,7 +107,7 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [SlowAction, FastAction, FastAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db))
+        metric_receiver: Metric::Receivers::Rds.new(db))
 
       proof = Proof::FullRunDuration.new(
         db[:duration_metric],

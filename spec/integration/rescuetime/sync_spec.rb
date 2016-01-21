@@ -1,5 +1,5 @@
 require 'app'
-require 'metrics/receivers/no_op'
+require 'metric/receivers/no_op'
 require 'httparty'
 require 'sequel'
 require 'spec_helper'
@@ -25,7 +25,7 @@ describe 'Rescuetime Data Sync' do
       db: db,
       table: interval_table,
       http: HTTParty,
-      metric_receiver: Metrics::Receivers::NoOp.new,
+      metric_receiver: Metric::Receivers::NoOp.new,
       run_uuid: run_uuid,
       api_domain: api_domain,
       api_key: 'some-test-credential',

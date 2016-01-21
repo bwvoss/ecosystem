@@ -1,6 +1,6 @@
-require 'metrics/cpu'
+require 'metric/cpu'
 
-describe Metrics::Cpu do
+describe Metric::Cpu do
   let(:cpu) { described_class.new }
 
   it 'returns the percentage used' do

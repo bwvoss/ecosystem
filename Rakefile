@@ -1,13 +1,13 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'timers'
-require 'metrics/receivers/rds'
-require 'metrics/cpu'
+require 'metric/receivers/rds'
+require 'metric/cpu'
 
 namespace :system_metrics do
   task :poll do
     timers = Timers::Group.new
-    metric_receiver = Metrics::Receivers::Rds.new(db[:system_metric])
-    cpu = Metrics::Cpu.new
+    metric_receiver = Metric::Receivers::Rds.new(db[:system_metric])
+    cpu = Metric::Cpu.new
 
     record_system_metrics = timers.every(5) do
       metric_receiver << {

@@ -1,6 +1,6 @@
 require 'usagewatch_ext'
 
-module Metrics
+module Metric
   class Cpu
     def percentage_used
       Usagewatch.uw_cpuused

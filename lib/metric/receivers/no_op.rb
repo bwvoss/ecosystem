@@ -1,4 +1,4 @@
-module Metrics
+module Metric
   module Receivers
     class NoOp
       def <<(_event)

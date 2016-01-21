@@ -1,6 +1,6 @@
-require 'metrics/receivers/rds'
+require 'metric/receivers/rds'
 
-describe Metrics::Receivers::Rds do
+describe Metric::Receivers::Rds do
   let(:mock_db) { { duration_metric: [] } }
 
   it 'removes type from the event and saves it in the right table' do

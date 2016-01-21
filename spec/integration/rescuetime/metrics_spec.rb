@@ -1,7 +1,7 @@
 require 'app'
 require 'httparty'
 require 'sequel'
-require 'metrics/receivers/rds'
+require 'metric/receivers/rds'
 require 'spec_helper'
 require 'time'
 
@@ -22,7 +22,7 @@ describe 'Metrics Captured during a rescuetime sync' do
       db: db,
       table: interval_table,
       http: HTTParty,
-      metric_receiver: Metrics::Receivers::Rds.new(db),
+      metric_receiver: Metric::Receivers::Rds.new(db),
       run_uuid: run_uuid,
       api_domain: rescuetime_api_domain,
       api_key: 'some-test-credential',

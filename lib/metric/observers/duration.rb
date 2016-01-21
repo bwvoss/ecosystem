@@ -1,4 +1,4 @@
-module Metrics
+module Metric
   module Observers
     class Duration
       def initialize(metrics, service)

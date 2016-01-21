@@ -1,6 +1,6 @@
-require 'metrics/receivers/no_op'
+require 'metric/receivers/no_op'
 
-describe Metrics::Receivers::NoOp do
+describe Metric::Receivers::NoOp do
   it 'responds to the correct receiver interface but does nothing' do
     expect do
       receiver = described_class.new

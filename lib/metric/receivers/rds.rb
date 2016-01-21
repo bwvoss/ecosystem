@@ -1,4 +1,4 @@
-module Metrics
+module Metric
   module Receivers
     class Rds
       def initialize(db)

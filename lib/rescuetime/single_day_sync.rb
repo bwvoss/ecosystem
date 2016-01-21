@@ -1,5 +1,5 @@
 require 'light-service'
-require 'metrics/observers/duration'
+require 'metric/observers/duration'
 require 'rescuetime/build_url'
 require 'rescuetime/parse_rows'
 require 'rescuetime/parse_date_to_utc'
@@ -26,7 +26,7 @@ module Rescuetime
     end
 
     def self.observer(configuration)
-      Metrics::Observers::Duration.new(
+      Metric::Observers::Duration.new(
         configuration.fetch(:metric_receiver),
         :rescuetime)
     end
