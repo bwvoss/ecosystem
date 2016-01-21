@@ -1,5 +1,27 @@
-require 'sequel'
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+require 'timers'
+require 'metrics/receivers/rds'
+require 'metrics/cpu'
+
+namespace :system_metrics do
+  task :poll do
+    timers = Timers::Group.new
+    metric_receiver = Metrics::Receivers::Rds.new(db[:system_metric])
+    cpu = Metrics::Cpu.new
+
+    record_system_metrics = timers.every(5) do
+      metric_receiver << {
+        type: 'system',
+        cpu_used: cpu.used,
+        cpu_idle: cpu.idle
+      }
+    end
+
+    loop do
+      record_system_metrics.wait
+    end
+  end
+end
 
 task :test do
   system('bundle exec rspec && bundle exec rubocop')
