@@ -26,15 +26,6 @@ describe Metrics::Observers::Duration do
       metric_receiver.first[key]
     end
 
-    specify 'time in utc' do
-      expect(metric(:time).utc?).to be_truthy
-    end
-
-    specify 'host' do
-      expect(Socket).to receive(:gethostname) { 'my-host' }
-      expect(metric(:host)).to eq('my-host')
-    end
-
     specify 'action as a string' do
       expect(metric(:action)).to eq('Class')
     end

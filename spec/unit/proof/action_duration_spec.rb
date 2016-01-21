@@ -1,6 +1,6 @@
 require 'proof/action_duration'
 
-class MockDb
+class MockDurationDb
   attr_reader :count
   def initialize(count)
     @count = count
@@ -20,7 +20,7 @@ describe Proof::ActionDuration do
   let(:from_time_utc) { Time.now.utc }
 
   it 'passes when no records match the query with duration in the time range' do
-    db = MockDb.new(0)
+    db = MockDurationDb.new(0)
     proof = described_class.new(db, duration_threshold, from_time_utc)
 
     proof.check!
@@ -29,7 +29,7 @@ describe Proof::ActionDuration do
   end
 
   it 'fails when records exist within time range and duration' do
-    db = MockDb.new(1)
+    db = MockDurationDb.new(1)
     proof = described_class.new(db, duration_threshold, from_time_utc)
 
     proof.check!

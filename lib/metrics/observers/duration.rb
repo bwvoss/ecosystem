@@ -12,8 +12,6 @@ module Metrics
         duration = Time.now - start_time
 
         @metrics << {
-          time: Time.now.utc,
-          host: Socket.gethostname,
           action: action.to_s,
           duration: duration,
           run_uuid: context.fetch(:run_uuid),
