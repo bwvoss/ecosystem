@@ -11,14 +11,14 @@ require 'securerandom'
 class SlowAction
   extend LightService::Action
   executed do
-    sleep(0.2)
+    sleep(0.02)
   end
 end
 
 class FastAction
   extend LightService::Action
   executed do
-    sleep(0.1)
+    sleep(0.01)
   end
 end
 
@@ -37,12 +37,11 @@ describe 'System proofs' do
         db: db,
         actions: [SlowAction],
         run_uuid: run_uuid,
-        metric_receiver: Metrics::Receivers::Rds.new(db)
-      )
+        metric_receiver: Metrics::Receivers::Rds.new(db))
 
       proof = Proof::ActionDuration.new(
         db[:duration_metric],
-        0.1,
+        0.01,
         five_minutes_ago_utc)
 
       proof.check!
@@ -55,12 +54,11 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [FastAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db)
-      )
+        metric_receiver: Metrics::Receivers::Rds.new(db))
 
       proof = Proof::ActionDuration.new(
         db[:duration_metric],
-        0.2,
+        0.02,
         five_minutes_ago_utc)
 
       proof.check!
@@ -73,10 +71,12 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [SlowAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db)
-      )
+        metric_receiver: Metrics::Receivers::Rds.new(db))
 
-      proof = Proof::ActionDuration.new(db[:duration_metric], 0.1, Time.now.utc)
+      proof = Proof::ActionDuration.new(
+        db[:duration_metric],
+        0.01,
+        Time.now.utc)
 
       proof.check!
 
@@ -90,10 +90,12 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [SlowAction, FastAction, FastAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db)
-      )
+        metric_receiver: Metrics::Receivers::Rds.new(db))
 
-      proof = Proof::FullRunDuration.new(db[:duration_metric], 4, run_uuid)
+      proof = Proof::FullRunDuration.new(
+        db[:duration_metric],
+        1,
+        run_uuid)
 
       proof.check!
 
@@ -105,10 +107,12 @@ describe 'System proofs' do
         db: db,
         run_uuid: run_uuid,
         actions: [SlowAction, FastAction, FastAction],
-        metric_receiver: Metrics::Receivers::Rds.new(db)
-      )
+        metric_receiver: Metrics::Receivers::Rds.new(db))
 
-      proof = Proof::FullRunDuration.new(db[:duration_metric], 0.3, run_uuid)
+      proof = Proof::FullRunDuration.new(
+        db[:duration_metric],
+        0.03,
+        run_uuid)
 
       proof.check!
 
