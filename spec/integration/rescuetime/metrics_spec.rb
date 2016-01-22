@@ -1,4 +1,4 @@
-require 'app'
+require 'rescuetime/single_day_sync'
 require 'httparty'
 require 'sequel'
 require 'metric/receivers/rds'
@@ -13,7 +13,7 @@ describe 'Metrics Captured during a rescuetime sync' do
   let(:db) { @db }
 
   it 'captures the duration of every action', services: [:rds] do
-    App.sync_rescuetime(
+    Rescuetime::SingleDaySync.call(
       db: db,
       table: interval_table,
       http: HTTParty,

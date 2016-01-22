@@ -1,4 +1,4 @@
-require 'app'
+require 'rescuetime/single_day_sync'
 require 'metric/receivers/no_op'
 require 'httparty'
 require 'sequel'
@@ -16,7 +16,7 @@ describe 'Rescuetime Data Sync' do
   let(:db) { @db }
 
   def sync(api_domain = rescuetime_api_domain)
-    App.sync_rescuetime(
+    Rescuetime::SingleDaySync.call(
       db: db,
       table: interval_table,
       http: HTTParty,
