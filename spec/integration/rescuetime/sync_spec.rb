@@ -5,7 +5,7 @@ require 'sequel'
 require 'spec_helper'
 require 'time'
 
-describe 'Rescuetime Data Sync' do
+describe 'Rescuetime Data Sync', type: :integration  do
   let(:utc_date) { Time.parse('2015-10-02 8:35').utc }
   let(:rescuetime_api_domain) { 'http://localhost:9292/rescuetime' }
   let(:rescuetime_deduplication_api_domain) do
@@ -13,11 +13,10 @@ describe 'Rescuetime Data Sync' do
   end
   let(:interval_table) { :rescuetime_interval }
   let(:run_uuid) { 'lskdjf838' }
-  let(:db) { @db }
 
   def sync(api_domain = rescuetime_api_domain)
     Rescuetime::SingleDaySync.call(
-      db: db,
+      db: DB,
       table: interval_table,
       http: HTTParty,
       metric_receiver: Metric::Receivers::NoOp.new,
@@ -30,35 +29,35 @@ describe 'Rescuetime Data Sync' do
   end
 
   it 'for a day', services: [:rds] do
-    expect(db[interval_table].count).to eq(0)
+    expect(DB[interval_table].count).to eq(0)
 
     sync
 
-    expect(db[interval_table].count).to eq(68)
+    expect(DB[interval_table].count).to eq(68)
   end
 
   it 'does not copy data', services: [:rds] do
-    expect(db[interval_table].count).to eq(0)
+    expect(DB[interval_table].count).to eq(0)
 
     sync
 
-    expect(db[interval_table].count).to eq(68)
+    expect(DB[interval_table].count).to eq(68)
 
     sync
 
-    expect(db[interval_table].count).to eq(68)
+    expect(DB[interval_table].count).to eq(68)
   end
 
   it 'saves only new data from rescuetime', services: [:rds] do
-    expect(db[interval_table].count).to eq(0)
+    expect(DB[interval_table].count).to eq(0)
 
     sync
 
-    expect(db[interval_table].count).to eq(68)
+    expect(DB[interval_table].count).to eq(68)
 
     sync(rescuetime_deduplication_api_domain)
 
-    expect(db[interval_table].count).to eq(79)
+    expect(DB[interval_table].count).to eq(79)
   end
 end
 

@@ -1,19 +1,17 @@
 require 'monitors/action_duration'
 require 'spec_helper'
-require 'sequel'
 
 describe Monitors::ActionDuration do
-  let(:db) { @db }
   let(:five_minutes_ago_utc) { Time.now.utc - (5 * 60) }
   let(:now) { Time.now.utc }
 
   def add_metrics(metrics)
-    db[:duration_metric].multi_insert(metrics)
+    DB[:duration_metric].multi_insert(metrics)
   end
 
   def build_proof(from_time)
     described_class.new(
-      db[:duration_metric],
+      DB[:duration_metric],
       1,
       from_time
     )

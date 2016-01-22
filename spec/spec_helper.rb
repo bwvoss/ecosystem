@@ -1,20 +1,31 @@
-RSpec.configure do |config|
-  config.before(:all, services: [:rds]) do
-    require 'database_cleaner'
-    # @connection_string = 'postgres://postgres@localhost:2200/postgres'
-    @connection_string = 'postgres://benvoss@localhost/postgres'
-    @db = Sequel.connect(@connection_string)
+require 'datastore/connection'
+require 'yaml'
+require 'database_cleaner'
 
+configs = YAML.load_file('configuration.yml')['test']
+DB = Datastore::Connection.new(configs['db_connection_string']).call
+
+RSpec.configure do |config|
+  config.before(:suite) do
     Sequel.extension :migration
-    Sequel::Migrator.run(@db, 'migrations')
+    Sequel::Migrator.run(DB, 'migrations')
+
+    DatabaseCleaner[:sequel, { connection: DB }]
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  # integration tests dont play nicely with transaction cleaning
+  config.before(:all, type: :integration) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.after(:all, type: :integration) do
+    DatabaseCleaner.strategy = :transaction
   end
 
   config.around(:each) do |example|
-    services = example.metadata[:services]
-    if services && services.include?(:rds)
-      require 'database_cleaner'
-      DatabaseCleaner[:sequel, { connection: @db }]
-      DatabaseCleaner.strategy = :truncation
+    services = example.metadata.fetch(:services, [])
+    if services.include?(:rds)
       DatabaseCleaner.cleaning do
         example.run
       end

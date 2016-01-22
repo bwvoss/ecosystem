@@ -1,20 +1,18 @@
 require 'monitors/cpu_percentage'
 require 'spec_helper'
-require 'sequel'
 
 describe Monitors::CpuPercentage do
-  let(:db) { @db }
   let(:five_minutes_ago_utc) { Time.now.utc - (5 * 60) }
   let(:now) { Time.now.utc }
   let(:table) { :system_metric }
 
   def add_metrics(metrics)
-    db[table].multi_insert(metrics)
+    DB[table].multi_insert(metrics)
   end
 
   def build_proof(metric_count_threshold = 1)
     described_class.new(
-      db[table],
+      DB[table],
       80,
       metric_count_threshold,
       five_minutes_ago_utc

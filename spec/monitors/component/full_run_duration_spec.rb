@@ -1,18 +1,16 @@
 require 'monitors/full_run_duration'
-require 'sequel'
 require 'spec_helper'
 
 describe Monitors::FullRunDuration do
-  let(:db) { @db }
   let(:run_uuid) { '8sdfu72bf' }
 
   def add_metrics(metrics)
-    db[:duration_metric].multi_insert(metrics)
+    DB[:duration_metric].multi_insert(metrics)
   end
 
   def build_proof
     described_class.new(
-      db[:duration_metric],
+      DB[:duration_metric],
       1,
       run_uuid
     )
