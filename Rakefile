@@ -3,23 +3,25 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 namespace :system_metrics do
   task :poll do
     require 'timers'
+    require 'sequel'
     require 'metric/receivers/rds'
     require 'metric/cpu'
 
+    db = Sequel.connect('postgres://benvoss@localhost/postgres')
     timers = Timers::Group.new
-    metric_receiver = Metric::Receivers::Rds.new(db[:system_metric])
+    metric_receiver = Metric::Receivers::Rds.new(db)
     cpu = Metric::Cpu.new
 
-    record_system_metrics = timers.every(5) do
+    timers.every(1) do
       metric_receiver << {
         type: 'system',
-        cpu_used: cpu.used,
-        cpu_idle: cpu.idle
+        cpu_percentage_used: cpu.percentage_used,
+        top_cpu_processes: cpu.top_processes
       }
     end
 
     loop do
-      record_system_metrics.wait
+      timers.wait
     end
   end
 end
