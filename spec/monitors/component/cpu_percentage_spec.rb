@@ -1,8 +1,8 @@
-require 'proof/cpu_percentage'
+require 'monitors/cpu_percentage'
 require 'spec_helper'
 require 'sequel'
 
-describe Proof::CpuPercentage do
+describe Monitors::CpuPercentage do
   let(:db) { @db }
   let(:five_minutes_ago_utc) { Time.now.utc - (5 * 60) }
   let(:now) { Time.now.utc }
@@ -13,7 +13,7 @@ describe Proof::CpuPercentage do
   end
 
   def build_proof(metric_count_threshold = 1)
-    Proof::CpuPercentage.new(
+    described_class.new(
       db[table],
       80,
       metric_count_threshold,

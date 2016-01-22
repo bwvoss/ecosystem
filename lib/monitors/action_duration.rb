@@ -1,4 +1,4 @@
-module Proof
+module Monitors
   class ActionDuration
     def initialize(db, duration_threshold, from_time_utc)
       @db = db

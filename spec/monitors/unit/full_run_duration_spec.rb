@@ -1,7 +1,7 @@
-require 'proof/full_run_duration'
+require 'monitors/full_run_duration'
 require 'test_doubles/db'
 
-describe Proof::FullRunDuration do
+describe Monitors::FullRunDuration do
   let(:duration_threshold) { 1 }
   let(:run_uuid) { 'sdf8sdhj' }
 

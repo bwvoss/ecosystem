@@ -1,8 +1,8 @@
-require 'proof/action_duration'
+require 'monitors/action_duration'
 require 'spec_helper'
 require 'sequel'
 
-describe Proof::ActionDuration do
+describe Monitors::ActionDuration do
   let(:db) { @db }
   let(:five_minutes_ago_utc) { Time.now.utc - (5 * 60) }
   let(:now) { Time.now.utc }
@@ -12,7 +12,7 @@ describe Proof::ActionDuration do
   end
 
   def build_proof(from_time)
-    Proof::ActionDuration.new(
+    described_class.new(
       db[:duration_metric],
       1,
       from_time

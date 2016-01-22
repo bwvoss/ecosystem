@@ -1,8 +1,8 @@
-require 'proof/full_run_duration'
+require 'monitors/full_run_duration'
 require 'sequel'
 require 'spec_helper'
 
-describe Proof::FullRunDuration do
+describe Monitors::FullRunDuration do
   let(:db) { @db }
   let(:run_uuid) { '8sdfu72bf' }
 
@@ -11,7 +11,7 @@ describe Proof::FullRunDuration do
   end
 
   def build_proof
-    Proof::FullRunDuration.new(
+    described_class.new(
       db[:duration_metric],
       1,
       run_uuid

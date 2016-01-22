@@ -1,7 +1,7 @@
-require 'proof/action_duration'
+require 'monitors/action_duration'
 require 'test_doubles/db'
 
-describe Proof::ActionDuration do
+describe Monitors::ActionDuration do
   let(:duration_threshold) { 1 }
   let(:from_time_utc) { Time.now.utc }
 

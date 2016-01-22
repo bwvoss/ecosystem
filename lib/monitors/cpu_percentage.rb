@@ -1,4 +1,4 @@
-module Proof
+module Monitors
   class CpuPercentage
     def initialize(db, cpu_threshold, metric_count_threshold, from_time)
       @db = db

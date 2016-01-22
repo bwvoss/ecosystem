@@ -1,4 +1,4 @@
-module Proof
+module Monitors
   class FullRunDuration
     def initialize(db, duration_threshold, run_uuid)
       @db = db
