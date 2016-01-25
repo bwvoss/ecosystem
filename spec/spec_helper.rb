@@ -15,11 +15,11 @@ RSpec.configure do |config|
   end
 
   # integration tests dont play nicely with transaction cleaning
-  config.before(:all, type: :integration) do
+  config.before(:all, :truncate) do
     DatabaseCleaner.strategy = :truncation
   end
 
-  config.after(:all, type: :integration) do
+  config.after(:all, :truncate) do
     DatabaseCleaner.strategy = :transaction
   end
 

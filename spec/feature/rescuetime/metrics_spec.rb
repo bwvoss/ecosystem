@@ -3,7 +3,7 @@ require 'metric/receivers/rds'
 require 'rescuetime/single_day_sync'
 require 'spec_helper'
 
-describe 'Metrics Captured during a rescuetime sync', type: :integration do
+describe 'Metrics Captured during a rescuetime sync', :truncate do
   let(:utc_date) { Time.parse('2015-10-02').utc }
   let(:rescuetime_api_domain) { 'http://localhost:9292/rescuetime' }
   let(:interval_table) { :rescuetime_interval }

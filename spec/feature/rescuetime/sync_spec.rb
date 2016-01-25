@@ -3,7 +3,7 @@ require 'metric/receivers/no_op'
 require 'rescuetime/single_day_sync'
 require 'spec_helper'
 
-describe 'Rescuetime Data Sync', type: :integration  do
+describe 'Rescuetime Data Sync', :truncate do
   let(:utc_date) { Time.parse('2015-10-02').utc }
   let(:rescuetime_api_domain) { 'http://localhost:9292/rescuetime' }
   let(:rescuetime_deduplication_api_domain) do
@@ -47,6 +47,8 @@ describe 'Rescuetime Data Sync', type: :integration  do
   end
 
   it 'saves only new data from rescuetime', services: [:rds] do
+    #TODO: maybe verify types of records, records fairly complex here
+
     expect(DB[interval_table].count).to eq(0)
 
     sync
