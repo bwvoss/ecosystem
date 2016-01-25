@@ -2,4 +2,6 @@ lib/secret_keys.rb
 tmp/
 infrastructure/build
 configuration.yml
+dashboards
+node_modules
 

@@ -28,10 +28,10 @@ namespace :rescuetime do
 end
 
 namespace :system_metrics do
-  require 'metric/cpu'
   require 'poll'
 
   task :poll do
+    require 'metric/cpu'
     metric_receiver = Metric::Receivers::Rds.new(DB)
     cpu = Metric::Cpu.new
 
