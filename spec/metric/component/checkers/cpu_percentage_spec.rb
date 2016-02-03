@@ -1,7 +1,7 @@
-require 'monitors/cpu_percentage'
+require 'metric/checkers/cpu_percentage'
 require 'spec_helper'
 
-describe Monitors::CpuPercentage do
+describe Metric::Checkers::CpuPercentage do
   let(:five_minutes_ago_utc) { Time.now.utc - (5 * 60) }
   let(:now) { Time.now.utc }
   let(:table) { :system_metric }

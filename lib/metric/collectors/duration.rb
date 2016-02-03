@@ -1,5 +1,5 @@
 module Metric
-  module Observers
+  module Collectors
     class Duration
       def initialize(metrics, service)
         @metrics = metrics

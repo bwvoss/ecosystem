@@ -47,8 +47,6 @@ describe 'Rescuetime Data Sync', :truncate do
   end
 
   it 'saves only new data from rescuetime', services: [:rds] do
-    #TODO: maybe verify types of records, records fairly complex here
-
     expect(DB[interval_table].count).to eq(0)
 
     sync

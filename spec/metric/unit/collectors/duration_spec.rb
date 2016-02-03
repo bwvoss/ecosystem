@@ -1,6 +1,6 @@
-require 'metric/observers/duration'
+require 'metric/collectors/duration'
 
-describe Metric::Observers::Duration do
+describe Metric::Collectors::Duration do
   let(:metric_receiver) { [] }
   let(:service) { :test_service }
   let(:run_uuid) { '1jksdfij5' }

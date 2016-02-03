@@ -1,7 +1,7 @@
-require 'monitors/action_duration'
+require 'metric/checkers/action_duration'
 require 'test_doubles/db'
 
-describe Monitors::ActionDuration do
+describe Metric::Checkers::ActionDuration do
   let(:duration_threshold) { 1 }
   let(:from_time_utc) { Time.now.utc }
 

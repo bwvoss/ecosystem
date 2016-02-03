@@ -1,7 +1,7 @@
-require 'monitors/full_run_duration'
+require 'metric/checkers/full_run_duration'
 require 'spec_helper'
 
-describe Monitors::FullRunDuration do
+describe Metric::Checkers::FullRunDuration do
   let(:run_uuid) { '8sdfu72bf' }
 
   def add_metrics(metrics)

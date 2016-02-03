@@ -1,0 +1,5 @@
+Essentially a factorygirl dsl for hashes, and subsequently files
+
+- that it reads xml and json from file extenstion
+- that it reads files from a specific directory and registers them
+

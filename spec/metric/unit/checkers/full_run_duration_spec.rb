@@ -1,7 +1,7 @@
-require 'monitors/full_run_duration'
+require 'metric/checkers/full_run_duration'
 require 'test_doubles/db'
 
-describe Monitors::FullRunDuration do
+describe Metric::Checkers::FullRunDuration do
   let(:duration_threshold) { 1 }
   let(:run_uuid) { 'sdf8sdhj' }
 

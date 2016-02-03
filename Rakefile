@@ -45,19 +45,8 @@ namespace :system_metrics do
   end
 end
 
-namespace :monitors do
-  task :cpu_percentage do
-  end
-
-  task :action_duration do
-  end
-
-  task :full_run_duration do
-  end
-end
-
 namespace :test do
-  task :default do
+  task :all do
     system('bundle exec rspec && bundle exec rubocop')
   end
 

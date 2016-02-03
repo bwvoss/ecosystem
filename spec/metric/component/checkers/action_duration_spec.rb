@@ -1,7 +1,7 @@
-require 'monitors/action_duration'
+require 'metric/checkers/action_duration'
 require 'spec_helper'
 
-describe Monitors::ActionDuration do
+describe Metric::Checkers::ActionDuration do
   let(:five_minutes_ago_utc) { Time.now.utc - (5 * 60) }
   let(:now) { Time.now.utc }
 
