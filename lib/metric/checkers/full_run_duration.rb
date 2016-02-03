@@ -9,7 +9,7 @@ module Metric
 
       def check!
         duration = @db.where(run_uuid: @run_uuid)
-        .sum(:duration)
+                   .sum(:duration)
         if duration
           @check_result = duration < @duration_threshold
         else

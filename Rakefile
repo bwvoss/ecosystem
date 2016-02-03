@@ -12,7 +12,7 @@ namespace :rescuetime do
   require 'securerandom'
 
   task :sync do
-   utc_date = Time.parse('2015-10-23').utc
+    utc_date = Time.parse('2015-10-23').utc
     Rescuetime::SingleDaySync.call(
       db: DB,
       table: :rescuetime_interval,

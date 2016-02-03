@@ -9,8 +9,8 @@ module Metric
 
       def check!
         @check_result = @db.where("duration >= #{@duration_threshold}")
-        .filter('time >= ?', @from_time_utc)
-        .count == 0
+                        .filter('time >= ?', @from_time_utc)
+                        .count == 0
       end
 
       def passed?

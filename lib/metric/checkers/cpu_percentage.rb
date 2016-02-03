@@ -10,8 +10,8 @@ module Metric
 
       def check!
         @check_result = @db.where("cpu_percentage_used >= #{@cpu_threshold}")
-        .filter('time >= ?', @from_time)
-        .count < @metric_count_threshold
+                        .filter('time >= ?', @from_time)
+                        .count < @metric_count_threshold
       end
 
       def passed?
