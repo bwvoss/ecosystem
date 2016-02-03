@@ -3,7 +3,7 @@ require 'json'
 require_relative 'rescuetime_response'
 require_relative 'rescuetime_deduplication_response'
 
-class ServiceProxy < Sinatra::Base
+class ServiceDouble < Sinatra::Base
   get '/hang' do
     sleep_time = params[:seconds]
     sleep(sleep_time.to_i) if sleep_time

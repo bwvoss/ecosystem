@@ -28,3 +28,8 @@ group :test do
   gem 'rspec',            '~> 3.3.0'
 end
 
+group :service_double do
+  gem 'sinatra',   '~> 1.4.6'
+  gem 'rack-test', '~> 0.6.3'
+end
+

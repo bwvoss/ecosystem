@@ -1,7 +1,8 @@
 AllCops:
   Exclude:
     - 'infrastructure/**/*'
-    - 'service_proxy/**/*'
+    - 'lib/service_double/**/*'
+    - 'spec/service_double/**/*'
     - 'spec/metric/feature/timeseries_spec.rb'
     - 'spec/generator/feature/*'
     - 'lib/datastore/deduplicated_insert.rb'
