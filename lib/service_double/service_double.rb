@@ -1,24 +1,22 @@
-require 'sinatra'
+require 'httparty'
 require 'json'
-require_relative 'rescuetime_response'
-require_relative 'rescuetime_deduplication_response'
 
-class ServiceDouble < Sinatra::Base
-  get '/hang' do
-    sleep_time = params[:seconds]
-    sleep(sleep_time.to_i) if sleep_time
-    content_type :json
+module ServiceDouble
+  BASE_URL = 'http://localhost:9292'
+
+  def self.set(config)
+    HTTParty.put(
+      "#{BASE_URL}/__config__/set_response",
+      body: config.to_json,
+      headers: { 'Content-Type' => 'application/json' }
+    )
   end
 
-  get '/rescuetime' do
-    sleep_time = params[:hang]
-    sleep(sleep_time.to_i) if sleep_time
-    content_type :json
-    RescuetimeResponse.response.to_json
-  end
-
-  get '/rescuetime/deduplication' do
-    content_type :json
-    RescuetimeDeduplicationResponse.response.to_json
+  def self.inspect(path)
+    JSON.parse(
+      HTTParty.get("#{BASE_URL}#{path}").body,
+      symbolize_names: true
+    )
   end
 end
+

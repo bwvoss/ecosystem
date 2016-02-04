@@ -1,3 +1,3 @@
-require_relative 'service_double'
+require_relative 'server'
 
-run ServiceDouble
+run ServiceDouble::Server

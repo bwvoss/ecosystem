@@ -1,28 +1,23 @@
-require 'rack/test'
 require 'service_double/service_double'
 
 describe ServiceDouble do
-  include Rack::Test::Methods
+  let(:path) { '/test_path' }
 
-  def app
-    ServiceDouble.new
+  before :each do
+    @set_call = described_class.set(
+      path: path,
+      response: { a: 2 }
+    )
   end
 
-  # TODO: test without sleeping
-
-  it 'responds to the rescuetime interval fetch for October 2nd' do
-    query_string = 'key=example-api-key&restrict_begin=2015-10-02&restrict_end=2015-10-02&perspective=interval&resolution_time=minute&format=json'
-
-    get "/rescuetime?#{query_string}"
-
-    expect(JSON.parse(last_response.body)).to eq(RescuetimeResponse.response)
+  it 'sets paths and responses' do
+    expect(JSON.parse(@set_call.body)).to eq('a' => 2)
   end
 
-  it 'responds to the rescuetime interval fetch for October 2nd for deduplication' do
-    query_string = 'key=example-api-key&restrict_begin=2015-10-02&restrict_end=2015-10-02&perspective=interval&resolution_time=minute&format=json'
+  it 'inspects responses for paths' do
+    response = described_class.inspect(path)
 
-    get "/rescuetime/deduplication?#{query_string}"
-
-    expect(JSON.parse(last_response.body)).to eq(RescuetimeDeduplicationResponse.response)
+    expect(response).to eq(a: 2)
   end
 end
+
