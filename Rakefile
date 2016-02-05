@@ -27,15 +27,23 @@ namespace :rescuetime do
   end
 end
 
-namespace :test do
-  task :all do
-    system('bundle exec rspec && bundle exec rubocop')
-  end
-
-  task :gem_vulns do
-    system('bundle exec bundle-audit update && bundle exec bundle-audit')
-  end
+task :spec do
+  system('bundle exec rspec')
 end
+
+task :lint do
+  system('bundle exec rubocop')
+end
+
+task :update_audit_data do
+  system('bundle exec bundle-audit update')
+end
+
+task :audit_gems do
+  system('bundle exec bundle-audit')
+end
+
+task default: %w(spec lint audit_gems)
 
 namespace :db do
   task :migrate do
