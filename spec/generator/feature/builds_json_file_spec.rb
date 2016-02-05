@@ -1,23 +1,15 @@
-#describe "Generates a JSON file" do
-  #it 'with fake data' do
-    #generator = Generator.new('spec/fixtures/generated_data.json', {
-      #:client_id => 2,
-      #:connector_id => 3,
-      #:asset => {
-        #Generators.for(:asset),
-        #:vulnerabilities => Generators.vulnerabilities(count: 7)
-      #}
-    #})
+# require 'generator/generator'
 
-    #generator.generate!
+# describe "Generates a JSON file" do
+# it 'generates rescuetime data randomly' do
+# generator = Generator.to_file('spec/fixtures/generated_data.json', {
+# notes: 'data is an array of arrays (rows), column names for rows in row_headers',
+# columns: ["Date", "Time Spent (seconds)", "Number of People", "Activity", "Category", "Productivity"],
+# rows: Generator.generate_rescuetime_rows(5)
+# })
 
-    #file_to_hash = JSON.parse(File.read('spec/fixtures/generated_data.json'))
-    #asset = file_to_hash.fetch(:asset)
-
-    #expect(file_to_hash.fetch(:client_id)).to eq(2)
-    #expect(file_to_hash.fetch(:connector_id)).to eq(3)
-    #expect(asset).not_to be_nil
-    #expect(asset.fetch(:vulnerabilities).count).to eq(7)
-  #end
-#end
+# file_to_hash = JSON.parse(File.read('spec/fixtures/generated_data.json'))
+# expect(response.fetch(:rows).count).to eq(5)
+# end
+# end
 
