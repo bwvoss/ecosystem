@@ -10,12 +10,6 @@ group :datastore do
   gem 'sequel', '~> 4.25.0'
 end
 
-group :system_metrics do
-  gem 'timers', '~> 4.1.1'
-  gem 'foreman', '~> 0.78.0'
-  gem 'usagewatch_ext', '~> 0.2.1'
-end
-
 group :development do
   gem 'pry', '~> 0.10.0'
   gem 'bundler-audit', '~> 0.4.0'

@@ -27,24 +27,6 @@ namespace :rescuetime do
   end
 end
 
-namespace :system_metrics do
-  require 'poll'
-
-  task :poll do
-    require 'metric/cpu'
-    metric_receiver = Metric::Receivers::Rds.new(DB)
-    cpu = Metric::Cpu.new
-
-    Poll.new(1) do
-      metric_receiver << {
-        type: 'system',
-        cpu_percentage_used: cpu.percentage_used,
-        top_cpu_processes: cpu.top_processes
-      }
-    end.start
-  end
-end
-
 namespace :test do
   task :all do
     system('bundle exec rspec && bundle exec rubocop')
