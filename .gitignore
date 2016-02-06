@@ -4,4 +4,5 @@ infrastructure/build
 configuration.yml
 dashboards
 node_modules
+csv
 

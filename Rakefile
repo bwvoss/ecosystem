@@ -31,6 +31,17 @@ task :collectd do
   system('sudo collectd -f -C collectd.conf')
 end
 
+task :parse_collectd do
+  require 'metric/collectors/collectd_csv'
+  system('sudo chown -R benvoss:staff csv/')
+
+  # TODO: Fill in the csv path manually
+  collector = Metric::Collectors::CollectdCsv.new(
+    DB[:system_metric],
+    'csv/bens-macbook-pro.local/cpu/percent-active-2016-02-05')
+  collector.call
+end
+
 task :spec do
   system('bundle exec rspec')
 end

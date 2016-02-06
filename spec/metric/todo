@@ -2,6 +2,6 @@
 2. Ship the data => Metric::Receivers
 3. Manually Inspect the data => Metric::Inspectors
 4. Analyze the data => Metric::Analyzers || Metric::Statistics
-5. Automated checking for bad things in the data => Metric::Checkers
+5. Automated checking for bad things => Metric::Checkers
 6. Respond from the data => Metric::Responders
 
