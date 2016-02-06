@@ -6,6 +6,10 @@ describe FlogScore do
 
     response = parser.per_class
 
+    # TODO: {
+    #   klass: 'Complicated::Dirty',
+    #   score: 58.9
+    # }
     expect(response).to eq(['58.9: Complicated::Dirty total'])
   end
 

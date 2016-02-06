@@ -45,6 +45,10 @@ end
 
 task default: %w(spec lint audit_gems)
 
+task :service_double do
+  system('cd lib/service_double/ && rackup config.ru')
+end
+
 namespace :db do
   task :migrate do
     Sequel.extension :migration
