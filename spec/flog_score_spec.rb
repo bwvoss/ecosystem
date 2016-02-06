@@ -6,11 +6,9 @@ describe FlogScore do
 
     response = parser.per_class
 
-    # TODO: {
-    #   klass: 'Complicated::Dirty',
-    #   score: 58.9
-    # }
-    expect(response).to eq(['58.9: Complicated::Dirty total'])
+    expect(response).to eq([
+      { score: 58.9, klass: 'Complicated::Dirty' }
+    ])
   end
 
   it 'returns the flog scores for a directory by class' do
@@ -19,8 +17,8 @@ describe FlogScore do
     response = parser.per_class
 
     expect(response).to eq([
-      '53.9: Complicated::Dirty total',
-      '11.3: Simple::BuildUrl total'
+      { score: 53.9, klass: 'Complicated::Dirty' },
+      { score: 11.3, klass: 'Simple::BuildUrl' }
     ])
   end
 end

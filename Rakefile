@@ -50,6 +50,13 @@ task :lint do
   system('bundle exec rubocop')
 end
 
+task :flog do
+  require 'flog_score'
+
+  flog = FlogScore.new('lib')
+  p flog.per_class
+end
+
 task :update_audit_data do
   system('bundle exec bundle-audit update')
 end

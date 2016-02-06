@@ -11,16 +11,8 @@ class FlogScoreContainer
     @from_flog << flog_value
   end
 
-  def total_per_class
-    totals = @from_flog.select do |item|
-      /total/.match(item)
-    end
-
-    totals.shift # remove overall total
-
-    totals.map do |item|
-      item.gsub(/\s+/, ' ').strip
-    end
+  def scores
+    @from_flog
   end
 end
 
@@ -38,7 +30,30 @@ class FlogScore
 
     flogger.report @flog_score_container
 
-    @flog_score_container.total_per_class
+    scores = @flog_score_container.scores
+
+    totals = select_totals(scores)
+    cleaned = remove_whitespace(totals)
+
+    cleaned.map do |item|
+      {
+        score: /\d+\.\d+/.match(item).to_s.to_f,
+        klass: /(?<=: ).\S+/.match(item).to_s
+      }
+    end
+  end
+
+  def select_totals(values)
+    values.shift # remove overall total
+    values.select do |item|
+      /total/.match(item)
+    end
+  end
+
+  def remove_whitespace(values)
+    values.map do |item|
+      item.gsub(/\s+/, ' ').strip
+    end
   end
 end
 
