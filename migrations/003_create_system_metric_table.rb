@@ -7,7 +7,6 @@ Sequel.migration do
       DateTime :time
       String :host
       Float :cpu_percentage_used
-      String :top_cpu_processes
     end
   end
 end

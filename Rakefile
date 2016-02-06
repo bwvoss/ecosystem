@@ -27,6 +27,10 @@ namespace :rescuetime do
   end
 end
 
+task :collectd do
+  system('sudo collectd -f -C collectd.conf')
+end
+
 task :spec do
   system('bundle exec rspec')
 end
