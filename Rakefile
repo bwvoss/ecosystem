@@ -52,9 +52,18 @@ end
 
 task :flog do
   require 'flog_score'
+  p 'Running Flog Checks....'
 
   flog = FlogScore.new('lib')
-  p flog.per_class
+  threshold_breached = flog.per_class.any? do |item|
+    item[:score] > 33
+  end
+
+  if threshold_breached
+    fail 'flog threshold breached'
+  else
+    p 'Flog score threshold ok!'
+  end
 end
 
 task :update_audit_data do
@@ -65,7 +74,7 @@ task :audit_gems do
   system('bundle exec bundle-audit')
 end
 
-task default: %w(spec lint audit_gems)
+task default: %w(spec lint audit_gems flog)
 
 task :service_double do
   system('cd lib/service_double/ && rackup config.ru')
