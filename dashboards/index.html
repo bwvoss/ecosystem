@@ -1,0 +1,39 @@
+<div id="app"></div>
+
+<link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css" />
+<script src="bower_components/chartist/dist/chartist.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/react/react.js"></script>
+<script src="bower_components/react/react-dom.js"></script>
+
+<script type="text/javascript">
+var ReactChart = React.createClass({
+  componentDidMount: function () {
+    $.get(this.props.source, function(result){
+      var data = {
+        labels: _.map(result.action_durations, function(_, action) { return action}),
+        series: [_.map(result.action_durations, function(duration, _) { return duration })]
+      };
+
+      this.updateChart(data);
+    }.bind(this));
+  },
+
+  updateChart: function (data) {
+    return new Chartist.Line('.chart', data);
+  },
+
+  render: function () {
+    return React.createElement('div', { className: 'chart' });
+  }
+});
+
+var App = React.createClass({
+  render: function () {
+    return React.createElement(ReactChart, { source: 'http://localhost:9292/duration/1234'});
+  }
+});
+
+ReactDOM.render(React.createElement(App, null), document.querySelector('#app'));
+</script>
