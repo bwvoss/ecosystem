@@ -22,9 +22,11 @@ describe Metric::Query::AllRunDurations do
       duration_metric('3', 5.04)
     ])
 
-    metrics = described_class.new(DB[:duration_metric])
+    metrics = described_class.call(
+      metric: DB[:duration_metric]
+    )
 
-    expect(metrics.inspect).to eq([
+    expect(metrics).to eq([
       { run_uuid: '1', duration: 1.48 },
       { run_uuid: '2', duration: 2.08 },
       { run_uuid: '3', duration: 5.04 }

@@ -1,20 +1,15 @@
 module Metric
   module Query
-    class ActionDurations
-      def initialize(metric, run_uuid)
-        @metric = metric
-        @run_uuid = run_uuid
-      end
+    ActionDurations = lambda do |context|
+      metric = context.fetch(:metric)
+      run_uuid = context.fetch(:run_uuid)
+      records = metric.where(run_uuid: run_uuid).all
 
-      def inspect
-        records = @metric.where(run_uuid: @run_uuid).all
-
-        records.map do |record|
-          {
-            action: record.fetch(:action),
-            duration: record.fetch(:duration)
-          }
-        end
+      records.map do |record|
+        {
+          action: record.fetch(:action),
+          duration: record.fetch(:duration)
+        }
       end
     end
   end

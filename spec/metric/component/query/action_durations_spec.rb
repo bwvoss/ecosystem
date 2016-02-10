@@ -21,9 +21,12 @@ describe Metric::Query::ActionDurations do
       duration_metric('OtherAction', 1.24)
     ])
 
-    metrics = described_class.new(DB[:duration_metric], run_uuid)
+    metrics = described_class.call(
+      metric: DB[:duration_metric],
+      run_uuid: run_uuid
+    )
 
-    expect(metrics.inspect).to eq([
+    expect(metrics).to eq([
       { action: 'TestAction', duration: 0.24 },
       { action: 'OtherAction', duration: 1.24 }
     ])

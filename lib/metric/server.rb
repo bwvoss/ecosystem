@@ -9,23 +9,19 @@ module Metric
       response['Access-Control-Allow-Origin'] = '*'
       content_type :json
 
-      metrics = Metric::Query::AllRunDurations.new(
-        DB[:duration_metric]
-      )
-
-      metrics.inspect.to_json
+      Metric::Query::AllRunDurations.call(
+        metric: DB[:duration_metric]
+      ).to_json
     end
 
     get '/runs/:run_uuid/duration' do
       response['Access-Control-Allow-Origin'] = '*'
       content_type :json
 
-      metrics = Metric::Query::RunDuration.new(
-        DB[:duration_metric],
-        params[:run_uuid]
-      )
-
-      metrics.inspect.to_json
+      Metric::Query::RunDuration.call(
+        metric: DB[:duration_metric],
+        run_uuid: params[:run_uuid]
+      ).to_json
     end
   end
 end

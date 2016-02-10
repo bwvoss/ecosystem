@@ -1,16 +1,12 @@
 module Metric
   module Query
-    class AllRunDurations
-      def initialize(metric)
-        @metric = metric
-      end
+    AllRunDurations = lambda do |context|
+      metric = context.fetch(:metric)
 
-      def inspect
-        @metric.select_group(:run_uuid)
-          .select_append { sum(duration).as(duration) }
-          .order(:run_uuid)
-          .all
-      end
+      metric.select_group(:run_uuid)
+      .select_append { sum(duration).as(duration) }
+      .order(:run_uuid)
+      .all
     end
   end
 end
