@@ -13,12 +13,15 @@ namespace :rescuetime do
 
   task :sync do
     utc_date = Time.parse('2015-10-23').utc
+    run_uuid = SecureRandom.uuid
+    p "run uuid is: #{run_uuid}"
+
     Rescuetime::SingleDaySync.call(
       db: DB,
       table: :rescuetime_interval,
       http: HTTParty,
       metric_receiver: Metric::Receivers::Rds.new(DB),
-      run_uuid: SecureRandom.uuid,
+      run_uuid: run_uuid,
       api_domain: 'https://www.rescuetime.com/anapi/data',
       api_key: configs['rescuetime_api_key'],
       datetime: utc_date,
