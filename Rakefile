@@ -12,21 +12,34 @@ namespace :rescuetime do
   require 'securerandom'
 
   task :sync do
-    utc_date = Time.parse('2015-10-23').utc
-    run_uuid = SecureRandom.uuid
-    p "run uuid is: #{run_uuid}"
+    dates = [
+      Time.parse('2015-10-23').utc,
+      Time.parse('2015-10-24').utc,
+      Time.parse('2015-10-25').utc,
+      Time.parse('2015-10-26').utc,
+      Time.parse('2015-10-27').utc,
+      Time.parse('2015-10-28').utc,
+      Time.parse('2015-10-29').utc,
+      Time.parse('2015-10-30').utc,
+      Time.parse('2015-10-31').utc
+    ]
 
-    Rescuetime::SingleDaySync.call(
-      db: DB,
-      table: :rescuetime_interval,
-      http: HTTParty,
-      metric_receiver: Metric::Receivers::Rds.new(DB),
-      run_uuid: run_uuid,
-      api_domain: 'https://www.rescuetime.com/anapi/data',
-      api_key: configs['rescuetime_api_key'],
-      datetime: utc_date,
-      timezone: 'America/Chicago'
-    )
+    dates.each do |date|
+      run_uuid = SecureRandom.uuid
+      p "run uuid is: #{run_uuid}"
+
+      Rescuetime::SingleDaySync.call(
+        db: DB,
+        table: :rescuetime_interval,
+        http: HTTParty,
+        metric_receiver: Metric::Receivers::Rds.new(DB),
+        run_uuid: run_uuid,
+        api_domain: 'https://www.rescuetime.com/anapi/data',
+        api_key: configs['rescuetime_api_key'],
+        datetime: date,
+        timezone: 'America/Chicago'
+      )
+    end
   end
 end
 
@@ -81,6 +94,10 @@ task default: %w(spec lint audit_gems flog)
 
 task :service_double do
   system('cd lib/service_double/ && rackup config.ru')
+end
+
+task :metric_server do
+  system('cd lib/metric/ && rackup config.ru -p 8000')
 end
 
 namespace :db do

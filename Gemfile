@@ -12,6 +12,7 @@ end
 
 group :development do
   gem 'pry', '~> 0.10.0'
+  gem 'daemons', '~> 1.2.3'
   gem 'bundler-audit', '~> 0.4.0'
   gem 'flog', '~> 4.3.2', require: false
   gem 'rubocop', '~> 0.33.0', require: false

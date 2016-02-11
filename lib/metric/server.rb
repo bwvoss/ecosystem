@@ -1,6 +1,6 @@
 require 'sinatra'
 require_relative 'query/all_run_durations'
-require_relative 'query/run_duration'
+require_relative 'query/action_durations'
 require_relative 'query/system_metrics'
 require 'json'
 

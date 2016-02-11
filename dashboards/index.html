@@ -1,4 +1,41 @@
-<div id="app"></div>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ecosystem Metrics</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+      <ul class="nav metismenu" id="side-menu">
+        <li class="nav-header">
+          <strong class="font-bold">Ecosystem Metrics</strong>
+        </li>
+        <li class="active">
+          <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level">
+            <li class="active"><a href="index.html">Rescuetime Runs</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+      <div class="wrapper wrapper-content">
+        <div id="runs-overview"></div>
+      </div>
+    </div>
+  </div>
 
 <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css" />
 <script src="bower_components/chartist/dist/chartist.js"></script>
@@ -7,33 +44,15 @@
 <script src="bower_components/react/react.js"></script>
 <script src="bower_components/react/react-dom.js"></script>
 
-<script type="text/javascript">
-var ReactChart = React.createClass({
-  componentDidMount: function () {
-    $.get(this.props.source, function(result){
-      var data = {
-        labels: _.map(result.action_durations, function(_, action) { return action}),
-        series: [_.map(result.action_durations, function(duration, _) { return duration })]
-      };
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/pace/pace.js"></script>
+<script src="bower_components/metisMenu/dist/metisMenu.js"></script>
+<script src="bower_components/slimscroll/jquery.slimscroll.js"></script>
 
-      this.updateChart(data);
-    }.bind(this));
-  },
+<script src="build/index.js"></script>
 
-  updateChart: function (data) {
-    return new Chartist.Line('.chart', data);
-  },
+<script src="js/inspinia.js"></script>
 
-  render: function () {
-    return React.createElement('div', { className: 'chart' });
-  }
-});
+</body>
 
-var App = React.createClass({
-  render: function () {
-    return React.createElement(ReactChart, { source: 'http://localhost:9292/duration/1234'});
-  }
-});
-
-ReactDOM.render(React.createElement(App, null), document.querySelector('#app'));
-</script>
+</html>
