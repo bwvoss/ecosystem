@@ -1,35 +1,10 @@
-// var ReactChart = React.createClass({
-//   componentDidMount: function () {
-//     var data = {
-//       labels: ['1', '2', '3'],
-//       series: [[100, 200, 30, 234]]
-//     }
-//     this.updateChart(data);
-//   },
-//
-//   updateChart: function (data) {
-//     return new Chartist.Line('.chart', data);
-//   },
-//
-//   render: function () {
-//     return React.createElement('div', { className: 'chart' });
-//   }
-// });
-
-// var App = React.createClass({
-//   render: function () {
-//     return React.createElement(ReactChart, { source: 'http://localhost:8000/duration/1234'});
-//   }
-// });
-//
-
 var RunTile = React.createClass({
   render: function() {
     return (
-      <div className="col-lg-3">
+      <div className="col-lg-3" onClick={this.props.onTileClick.bind(this, this.props.runUuid)}>
         <div className="ibox float-e-margins">
           <div className="ibox-title">
-            <h5>{this.props.run_uuid}</h5>
+            <h5>{this.props.runUuid}</h5>
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">{this.props.duration}</h1>
@@ -45,9 +20,9 @@ var RunsOverview = React.createClass({
   render: function() {
     var tiles = this.props.data.map(function(runData) {
       return(
-        <RunTile duration={runData.duration.toString()} run_uuid={runData.run_uuid} />
+        <RunTile duration={runData.duration.toString()} runUuid={runData.run_uuid} onTileClick={this.props.onTileClick}/>
       )
-    });
+    }.bind(this));
 
     return (
       <div className="row">
@@ -57,7 +32,43 @@ var RunsOverview = React.createClass({
   }
 });
 
+var ReactChart = React.createClass({
+  componentDidMount: function () {
+    $.get('http://localhost:8000/runs/' + this.props.runUuid + '/duration', function(response) {
+      var data = {
+        labels: response.map(function(actionData) { return actionData.action }),
+        series: [response.map(function(actionData) { return actionData.duration})]
+      }
+
+      this.updateChart(data);
+    }.bind(this));
+  },
+
+  updateChart: function (data) {
+    return new Chartist.Bar('#ct-chart', data);
+  },
+
+  render: function () {
+    return(
+      <div className="col-lg-12">
+        <div className="ibox float-e-margins">
+          <div className="ibox-title">
+            <h5>Action Durations</h5>
+          </div>
+          <div className="ibox-content">
+            <div id="ct-chart"></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+});
+
+var renderTileMetrics = function(runUuid) {
+  ReactDOM.render(<ReactChart runUuid={runUuid} />, document.querySelector('#runs-overview'));
+}
+
 $.get('http://localhost:8000/runs', function (data) {
-  ReactDOM.render(<RunsOverview data={data} />, document.querySelector('#runs-overview'));
+  ReactDOM.render(<RunsOverview data={data} onTileClick={renderTileMetrics}/>, document.querySelector('#runs-overview'));
 });
 

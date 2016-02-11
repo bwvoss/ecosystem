@@ -2,7 +2,8 @@ lib/secret_keys.rb
 tmp/
 infrastructure/build
 configuration.yml
-node_modules
+dashboards/bower_components
+dashboards/node_modules
 csv
 insipia
 

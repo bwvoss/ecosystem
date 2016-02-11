@@ -19,7 +19,7 @@ module Metric
       response['Access-Control-Allow-Origin'] = '*'
       content_type :json
 
-      Metric::Query::RunDuration.call(
+      Metric::Query::ActionDurations.call(
         metric: DB[:duration_metric],
         run_uuid: params[:run_uuid]
       ).to_json
