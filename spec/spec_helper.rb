@@ -30,3 +30,6 @@ RSpec.configure do |config|
   end
 end
 
+def utc_date(date_string)
+  Time.parse(date_string).utc
+end

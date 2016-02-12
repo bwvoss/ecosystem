@@ -1,5 +1,5 @@
 require 'light-service'
-require 'metric/collectors/duration'
+require 'metric/collector_factory'
 require 'rescuetime/build_url'
 require 'rescuetime/parse_rows'
 require 'rescuetime/parse_date_to_utc'
@@ -26,9 +26,12 @@ module Rescuetime
     end
 
     def self.observer(configuration)
-      Metric::Collectors::Duration.new(
+      Metric::CollectorFactory.new(
         configuration.fetch(:metric_receiver),
-        :rescuetime)
+        :rescuetime,
+        configuration.fetch(:run_uuid),
+        actions.last
+      )
     end
   end
 end

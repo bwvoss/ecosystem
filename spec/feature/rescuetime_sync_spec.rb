@@ -1,18 +1,18 @@
-require 'httparty'
-require 'test_data/rescuetime_response'
+require 'rescuetime/run'
 require 'metric/receivers/no_op'
-require 'rescuetime/single_day_sync'
-require 'spec_helper'
 require 'service_double/service_double'
+require 'test_data/rescuetime_response'
+require 'spec_helper'
 
 describe 'Rescuetime Data Sync', :truncate do
-  let(:utc_date) { Time.parse('2015-10-02').utc }
   let(:rescuetime_api_domain) { "#{ServiceDouble::BASE_URL}/rescuetime" }
   let(:rescuetime_deduplication_api_domain) do
     "#{ServiceDouble::BASE_URL}/rescuetime/deduplication"
   end
-  let(:interval_table) { :rescuetime_interval }
-  let(:run_uuid) { 'lskdjf838' }
+
+  def rescuetime_record_count
+    DB[:rescuetime_interval].count
+  end
 
   before :all do
     ServiceDouble.set(
@@ -25,37 +25,41 @@ describe 'Rescuetime Data Sync', :truncate do
   end
 
   def sync(api_domain = rescuetime_api_domain)
-    Rescuetime::SingleDaySync.call(
-      db: DB,
-      table: interval_table,
-      http: HTTParty,
+    Rescuetime::Run.call(
       metric_receiver: Metric::Receivers::NoOp.new,
-      run_uuid: run_uuid,
+      run_uuid: 'lskdjf838',
       api_domain: api_domain,
       api_key: 'some-test-credential',
-      datetime: utc_date,
-      timezone: 'America/Chicago'
+      datetime: utc_date('2015-10-02')
     )
   end
 
+  def assert_all_records_saved
+    expect(rescuetime_record_count).to eq(5)
+  end
+
   it 'for a day' do
-    expect(DB[interval_table].count).to eq(0)
+    expect(rescuetime_record_count).to eq(0)
 
     sync
 
-    expect(DB[interval_table].count).to eq(5)
+    assert_all_records_saved
   end
 
   it 'does not copy data' do
-    expect(DB[interval_table].count).to eq(0)
+    expect(rescuetime_record_count).to eq(0)
 
     sync
 
-    expect(DB[interval_table].count).to eq(5)
+    assert_all_records_saved
 
-    sync
+    expect do
+      sync
+    end.not_to change { rescuetime_record_count }
+  end
 
-    expect(DB[interval_table].count).to eq(5)
+  def assert_only_new_records_saved
+    expect(rescuetime_record_count).to eq(8)
   end
 
   it 'saves only new data from rescuetime' do
@@ -73,15 +77,15 @@ describe 'Rescuetime Data Sync', :truncate do
       }
     )
 
-    expect(DB[interval_table].count).to eq(0)
+    expect(rescuetime_record_count).to eq(0)
 
     sync
 
-    expect(DB[interval_table].count).to eq(5)
+    assert_all_records_saved
 
     sync(rescuetime_deduplication_api_domain)
 
-    expect(DB[interval_table].count).to eq(8)
+    assert_only_new_records_saved
   end
 end
 
