@@ -7,6 +7,7 @@ module Datastore
     end
 
     def call
+      Sequel.default_timezone = :utc
       Sequel.connect(@connection_string)
     end
   end

@@ -8,7 +8,6 @@ DB = Datastore::Connection.new(configs['db_connection_string']).call
 RSpec.configure do |config|
   config.before(:suite) do
     Sequel.extension :migration
-    Sequel.default_timezone = :utc
     Sequel::Migrator.run(DB, 'migrations')
 
     DatabaseCleaner[:sequel, { connection: DB }]
