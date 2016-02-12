@@ -8,6 +8,7 @@ Sequel.migration do
       String :host
       String :run_uuid
       String :status
+      String :error
     end
   end
 end

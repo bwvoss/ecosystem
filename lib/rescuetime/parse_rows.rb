@@ -7,7 +7,7 @@ module Rescuetime
     promises :parsed_rescuetime_rows
 
     executed do |ctx|
-      rows = ctx.get_response['rows']
+      rows = ctx.get_response.fetch('rows')
       parsed_rows = rows.map do |row|
         {
           date:                  row[0],

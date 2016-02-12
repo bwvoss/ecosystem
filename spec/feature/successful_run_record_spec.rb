@@ -14,8 +14,8 @@ describe 'Recording success at the end of the run', :truncate do
     )
   end
 
-  def result_record
-    DB[:run_result_metric].limit(1).first
+  let(:result_record) do
+    DB[:run_result_metric].first
   end
 
   it 'captures the run_uuid and time' do
