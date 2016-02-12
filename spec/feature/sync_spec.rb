@@ -18,8 +18,8 @@ describe 'Rescuetime Data Sync', :truncate do
     ServiceDouble.set(
       path: '/rescuetime',
       response: {
-        'row_headers' => TestData::RescuetimeResponse.headers,
-        'rows' => TestData::RescuetimeResponse.rows
+        row_headers: TestData::RescuetimeResponse.headers,
+        rows: TestData::RescuetimeResponse.rows
       }
     )
   end
@@ -68,8 +68,8 @@ describe 'Rescuetime Data Sync', :truncate do
     ServiceDouble.set(
       path: '/rescuetime/deduplication',
       response: {
-        'row_headers' => TestData::RescuetimeResponse.headers,
-        'rows' => TestData::RescuetimeResponse.rows + new_rows
+        row_headers: TestData::RescuetimeResponse.headers,
+        rows: TestData::RescuetimeResponse.rows + new_rows
       }
     )
 

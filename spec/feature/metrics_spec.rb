@@ -15,8 +15,8 @@ describe 'Metrics Captured during a rescuetime sync', :truncate do
     ServiceDouble.set(
       path: '/rescuetime',
       response: {
-        'row_headers' => TestData::RescuetimeResponse.headers,
-        'rows' => TestData::RescuetimeResponse.rows
+        row_headers: TestData::RescuetimeResponse.headers,
+        rows: TestData::RescuetimeResponse.rows
       }
     )
   end
