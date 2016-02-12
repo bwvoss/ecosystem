@@ -1,5 +1,5 @@
 require 'httparty'
-require 'test_doubles/rescuetime_response'
+require 'test_data/rescuetime_response'
 require 'metric/receivers/no_op'
 require 'rescuetime/single_day_sync'
 require 'spec_helper'
@@ -18,8 +18,8 @@ describe 'Rescuetime Data Sync', :truncate do
     ServiceDouble.set(
       path: '/rescuetime',
       response: {
-        'row_headers' => TestDoubles::RescuetimeResponse.headers,
-        'rows' => TestDoubles::RescuetimeResponse.rows
+        'row_headers' => TestData::RescuetimeResponse.headers,
+        'rows' => TestData::RescuetimeResponse.rows
       }
     )
   end
@@ -68,8 +68,8 @@ describe 'Rescuetime Data Sync', :truncate do
     ServiceDouble.set(
       path: '/rescuetime/deduplication',
       response: {
-        'row_headers' => TestDoubles::RescuetimeResponse.headers,
-        'rows' => TestDoubles::RescuetimeResponse.rows + new_rows
+        'row_headers' => TestData::RescuetimeResponse.headers,
+        'rows' => TestData::RescuetimeResponse.rows + new_rows
       }
     )
 

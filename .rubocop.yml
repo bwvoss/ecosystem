@@ -3,7 +3,7 @@ AllCops:
     - 'infrastructure/**/*'
     - 'spec/metric/feature/timeseries_spec.rb'
     - 'spec/generator/feature/*'
-    - 'spec/test_doubles/flog/*'
+    - 'spec/test_data/flog/*'
     - 'lib/datastore/deduplicated_insert.rb'
     - 'migrations/*'
     - 'Gemfile'

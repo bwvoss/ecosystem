@@ -5,7 +5,7 @@ describe Metric::Collectors::CollectdCsv do
   let(:collector) do
     described_class.new(
       DB[:system_metric],
-      'spec/test_doubles/percent-active'
+      'spec/test_data/percent-active'
     )
   end
 

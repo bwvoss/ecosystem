@@ -1,4 +1,4 @@
-module TestDoubles
+module TestData
   module RescuetimeResponse
     def self.headers
       [

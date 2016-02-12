@@ -2,7 +2,7 @@ require 'flog_score'
 
 describe FlogScore do
   it 'returns the flog scores for a file by class' do
-    parser = described_class.new('spec/test_doubles/flog/complicated.rb')
+    parser = described_class.new('spec/test_data/flog/complicated.rb')
 
     response = parser.per_class
 
@@ -12,7 +12,7 @@ describe FlogScore do
   end
 
   it 'returns the flog scores for a directory by class' do
-    parser = described_class.new('spec/test_doubles/flog')
+    parser = described_class.new('spec/test_data/flog')
 
     response = parser.per_class
 
