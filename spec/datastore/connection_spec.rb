@@ -7,6 +7,7 @@ describe Datastore::Connection do
     connection = described_class.new(config['db_connection_string'])
 
     expect(connection.call).not_to be_nil
+    expect(Sequel.database_timezone).to eq(:utc)
   end
 end
 
