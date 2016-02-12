@@ -1,27 +1,25 @@
 require 'metric/receivers/rds'
+require 'spec_helper'
 
 describe Metric::Receivers::Rds do
-  let(:mock_db) { { duration_metric: [] } }
+  it 'sends metrics to a relational database', services: [:rds] do
+    receiver = described_class.new(DB)
 
-  it 'removes type from the event and saves it in the right table' do
-    receiver = described_class.new(mock_db)
-    event = {
+    receiver << {
       type: :duration,
-      duration: 1,
-      host: 'my-host',
-      time: '11-03-2015'
+      host: 'test-host',
+      duration: 23
     }
 
-    receiver << event
-
-    expect(mock_db[:duration_metric].first).to eq(
-      duration: 1,
-      host: 'my-host',
-      time: '11-03-2015'
-    )
+    persisted_metric = DB[:duration_metric].first
+    expect(persisted_metric[:duration]).to eq(23)
+    expect(persisted_metric[:host]).to eq('test-host')
+    expect(persisted_metric.keys).not_to include('type')
   end
 
   context 'adds the following by default:' do
+    let(:mock_db) { { duration_metric: [] } }
+
     def metric(key)
       mock_db[:duration_metric].first.fetch(key)
     end
