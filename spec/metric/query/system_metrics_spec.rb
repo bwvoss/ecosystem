@@ -24,7 +24,7 @@ describe Metric::Query::SystemMetrics do
     }
   end
 
-  it 'returns system metrics during a run', services: [:rds] do
+  it 'returns system metrics during a run' do
     run_uuid = '1'
     now = Time.now.utc
     add_duration_metrics([
@@ -52,7 +52,7 @@ describe Metric::Query::SystemMetrics do
     ])
   end
 
-  it 'does not include metrics outside of the run', services: [:rds] do
+  it 'does not include metrics outside of the run' do
     run_uuid = '1'
     now = Time.now.utc
     add_duration_metrics([

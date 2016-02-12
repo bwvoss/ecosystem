@@ -9,7 +9,7 @@ describe Metric::Collectors::CollectdCsv do
     )
   end
 
-  it 'parses a csv to metric records', services: [:rds] do
+  it 'parses a csv to metric records' do
     expect(DB[:system_metric].count).to eq(0)
 
     collector.call
@@ -17,7 +17,7 @@ describe Metric::Collectors::CollectdCsv do
     expect(DB[:system_metric].count).to eq(3)
   end
 
-  it 'converts epoch time to utc', services: [:rds] do
+  it 'converts epoch time to utc' do
     collector.call
 
     times = DB[:system_metric].select_map(:time)
@@ -25,7 +25,7 @@ describe Metric::Collectors::CollectdCsv do
     expect(times.all?(&:utc?)).to be_truthy
   end
 
-  it 'sets the cpu_percentage_used', services: [:rds] do
+  it 'sets the cpu_percentage_used' do
     collector.call
 
     cpu_percentages = DB[:system_metric].select_map(:cpu_percentage_used)

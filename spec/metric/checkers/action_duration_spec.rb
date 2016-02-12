@@ -17,7 +17,7 @@ describe Metric::Checkers::ActionDuration do
     )
   end
 
-  it 'passes when no metrics exist', services: [:rds] do
+  it 'passes when no metrics exist' do
     proof = build_proof(five_minutes_ago_utc)
 
     proof.check!
@@ -26,7 +26,7 @@ describe Metric::Checkers::ActionDuration do
   end
 
   context 'based on the duration, the proof will:' do
-    it 'fail if an action takes longer than 1 second', services: [:rds] do
+    it 'fail if an action takes longer than 1 second' do
       add_metrics([
         {
           time: now,
@@ -42,7 +42,7 @@ describe Metric::Checkers::ActionDuration do
       expect(proof).not_to be_passed
     end
 
-    it 'passe when every action is under a second', services: [:rds] do
+    it 'passe when every action is under a second' do
       add_metrics([
         { time: now, action: 'TestAction', duration: 0.8 },
         { time: now, action: 'AnotherTestAction', duration: 0.4 }
@@ -55,7 +55,7 @@ describe Metric::Checkers::ActionDuration do
       expect(proof).to be_passed
     end
 
-    it 'fails when 1 second exactly', services: [:rds] do
+    it 'fails when 1 second exactly' do
       add_metrics([
         { time: now, action: 'TestAction', duration: 1 },
         { time: now, action: 'AnotherTestAction', duration: 0.4 }
@@ -70,7 +70,7 @@ describe Metric::Checkers::ActionDuration do
   end
 
   context 'based on the time range, the proof will:' do
-    it 'uses metrics where the start time is the same', services: [:rds] do
+    it 'uses metrics where the start time is the same' do
       add_metrics([
         { time: five_minutes_ago_utc, action: 'TestAction', duration: 2.2 },
         { time: now, action: 'AnotherTestAction', duration: 0.8 }
@@ -83,7 +83,7 @@ describe Metric::Checkers::ActionDuration do
       expect(proof).not_to be_passed
     end
 
-    it 'ignore metrics outside of time range', services: [:rds] do
+    it 'ignore metrics outside of time range' do
       six_minutes_ago_utc = Time.now.utc - (6 * 60)
       add_metrics([
         { time: six_minutes_ago_utc, action: 'TestAction', duration: 2.2 },

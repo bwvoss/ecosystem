@@ -16,7 +16,7 @@ describe Metric::Checkers::FullRunDuration do
     )
   end
 
-  it 'passes when no records exist', services: [:rds] do
+  it 'passes when no records exist' do
     proof = build_proof
 
     proof.check!
@@ -25,7 +25,7 @@ describe Metric::Checkers::FullRunDuration do
   end
 
   context 'when the sum duration is' do
-    it 'less than the threshold it passes', services: [:rds] do
+    it 'less than the threshold it passes' do
       add_metrics([
         { run_uuid: run_uuid, duration: 0.3 },
         { run_uuid: run_uuid, duration: 0.4 }
@@ -38,7 +38,7 @@ describe Metric::Checkers::FullRunDuration do
       expect(proof).to be_passed
     end
 
-    it 'equal to the threshold fails', services: [:rds] do
+    it 'equal to the threshold fails' do
       add_metrics([
         { run_uuid: run_uuid, duration: 0.5 },
         { run_uuid: run_uuid, duration: 0.4 },
@@ -52,7 +52,7 @@ describe Metric::Checkers::FullRunDuration do
       expect(proof).not_to be_passed
     end
 
-    it 'greater than the threshold it fails', services: [:rds] do
+    it 'greater than the threshold it fails' do
       add_metrics([
         { run_uuid: run_uuid, duration: 0.5 },
         { run_uuid: run_uuid, duration: 0.5 },
@@ -67,7 +67,7 @@ describe Metric::Checkers::FullRunDuration do
     end
   end
 
-  it 'ignores different run_uuids', services: [:rds] do
+  it 'ignores different run_uuids' do
     add_metrics([
       { run_uuid: 'some-other-uuid', duration: 1.5 },
       { run_uuid: run_uuid, duration: 0.5 },

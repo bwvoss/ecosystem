@@ -21,7 +21,7 @@ describe 'Metrics Captured during a rescuetime sync', :truncate do
     )
   end
 
-  it 'captures the duration of every action', services: [:rds] do
+  it 'captures the duration of every action' do
     Rescuetime::SingleDaySync.call(
       db: DB,
       table: interval_table,

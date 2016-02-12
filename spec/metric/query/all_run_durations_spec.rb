@@ -13,7 +13,7 @@ describe Metric::Query::AllRunDurations do
     }
   end
 
-  it 'returns the total duration for every run', services: [:rds] do
+  it 'returns the total duration for every run' do
     add_duration_metrics([
       duration_metric('1', 0.24),
       duration_metric('1', 1.24),

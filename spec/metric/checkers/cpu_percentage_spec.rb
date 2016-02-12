@@ -19,7 +19,7 @@ describe Metric::Checkers::CpuPercentage do
     )
   end
 
-  it 'passes when no metrics exist', services: [:rds] do
+  it 'passes when no metrics exist' do
     proof = build_proof(1)
 
     proof.check!
@@ -28,7 +28,7 @@ describe Metric::Checkers::CpuPercentage do
   end
 
   context 'percentage and count threshold' do
-    it 'passes when not enough metrics pass the threshold', services: [:rds] do
+    it 'passes when not enough metrics pass the threshold' do
       add_metrics([
         { time: now, cpu_percentage_used: 85 },
         { time: now, cpu_percentage_used: 86 },
@@ -43,7 +43,7 @@ describe Metric::Checkers::CpuPercentage do
       expect(proof).to be_passed
     end
 
-    it 'passes if no metrics pass the threshold', services: [:rds] do
+    it 'passes if no metrics pass the threshold' do
       add_metrics([
         { time: now, cpu_percentage_used: 15 },
         { time: now, cpu_percentage_used: 26 },
@@ -57,7 +57,7 @@ describe Metric::Checkers::CpuPercentage do
       expect(proof).to be_passed
     end
 
-    it 'fails when equal to the count threshold', services: [:rds] do
+    it 'fails when equal to the count threshold' do
       add_metrics([
         { time: now, cpu_percentage_used: 15 },
         { time: now, cpu_percentage_used: 80 },
@@ -71,7 +71,7 @@ describe Metric::Checkers::CpuPercentage do
       expect(proof).not_to be_passed
     end
 
-    it 'fails when bad metrics are greater than the count', services: [:rds] do
+    it 'fails when bad metrics are greater than the count' do
       add_metrics([
         { time: now, cpu_percentage_used: 15 },
         { time: now, cpu_percentage_used: 80 },
@@ -88,7 +88,7 @@ describe Metric::Checkers::CpuPercentage do
   end
 
   context 'time range' do
-    it 'uses metrics exactly on the time', services: [:rds] do
+    it 'uses metrics exactly on the time' do
       add_metrics([
         { time: now, cpu_percentage_used: 15 },
         { time: five_minutes_ago_utc, cpu_percentage_used: 80 },
@@ -103,7 +103,7 @@ describe Metric::Checkers::CpuPercentage do
       expect(proof).not_to be_passed
     end
 
-    it 'ignores metrics older than the time', services: [:rds] do
+    it 'ignores metrics older than the time' do
       six_minutes_ago_utc = Time.now.utc - (6 * 60)
       add_metrics([
         { time: now, cpu_percentage_used: 15 },

@@ -25,12 +25,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    services = example.metadata.fetch(:services, [])
-    if services.include?(:rds)
-      DatabaseCleaner.cleaning do
-        example.run
-      end
-    else
+    DatabaseCleaner.cleaning do
       example.run
     end
   end

@@ -38,7 +38,7 @@ describe 'Rescuetime Data Sync', :truncate do
     )
   end
 
-  it 'for a day', services: [:rds] do
+  it 'for a day' do
     expect(DB[interval_table].count).to eq(0)
 
     sync
@@ -46,7 +46,7 @@ describe 'Rescuetime Data Sync', :truncate do
     expect(DB[interval_table].count).to eq(5)
   end
 
-  it 'does not copy data', services: [:rds] do
+  it 'does not copy data' do
     expect(DB[interval_table].count).to eq(0)
 
     sync
@@ -58,7 +58,7 @@ describe 'Rescuetime Data Sync', :truncate do
     expect(DB[interval_table].count).to eq(5)
   end
 
-  it 'saves only new data from rescuetime', services: [:rds] do
+  it 'saves only new data from rescuetime' do
     new_rows = [
       ['2015-10-02T09:50:00', 70, 1, 'shophex.com', 'Uncategorized', 0],
       ['2015-10-02T09:50:00', 43, 1, 'kk.org', 'News & Opinion', -2],

@@ -2,7 +2,7 @@ require 'metric/receivers/rds'
 require 'spec_helper'
 
 describe Metric::Receivers::Rds do
-  it 'sends metrics to a relational database', services: [:rds] do
+  it 'sends metrics to a relational database' do
     receiver = described_class.new(DB)
 
     receiver << {

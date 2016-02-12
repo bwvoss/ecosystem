@@ -15,7 +15,7 @@ describe Metric::Query::ActionDurations do
     }
   end
 
-  it 'returns a list of actions durations per run uuid', services: [:rds] do
+  it 'returns a list of actions durations per run uuid' do
     add_duration_metrics([
       duration_metric('TestAction', 0.24),
       duration_metric('OtherAction', 1.24)

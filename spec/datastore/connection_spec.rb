@@ -2,7 +2,7 @@ require 'yaml'
 require 'datastore/connection'
 
 describe Datastore::Connection do
-  it 'returns a connection object', services: [:rds] do
+  it 'returns a connection object' do
     config = YAML.load_file('configuration.yml')['test']
     connection = described_class.new(config['db_connection_string'])
 
