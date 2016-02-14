@@ -11,9 +11,9 @@ require 'rescuetime/parse_rows'
 module Rescuetime
   class SingleDaySync
     extend LightService::Organizer
-    def self.call(configuration)
-      with(configuration)
-        .around_each(handler(configuration))
+    def self.call(config)
+      with(config)
+        .around_each(handler(config))
         .reduce(actions)
     end
 
@@ -27,16 +27,16 @@ module Rescuetime
       ]
     end
 
-    def self.handler(configuration)
-      Metric::AroundEachHandler.new(
-        configuration.fetch(:metric_receiver),
-        'Http::Get': handlers::HttpGet,
-        'Datastore::DeduplicatedInsert': handlers::DeduplicatedInsert
-      )
+    def self.handler(config)
+      Metric::AroundEachHandler.new(config.fetch(:metric_receiver), handlers)
     end
 
     def self.handlers
-      Rescuetime::Handlers
+      namespace = Rescuetime::Handlers
+      {
+        'Http::Get': namespace::HttpGet,
+        'Datastore::DeduplicatedInsert': namespace::DeduplicatedInsert
+      }
     end
   end
 end
