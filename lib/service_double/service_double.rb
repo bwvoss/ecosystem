@@ -13,10 +13,7 @@ module ServiceDouble
   end
 
   def self.inspect(path)
-    JSON.parse(
-      HTTParty.get("#{BASE_URL}#{path}").body,
-      symbolize_names: true
-    )
+    HTTParty.get("#{BASE_URL}#{path}")
   end
 end
 

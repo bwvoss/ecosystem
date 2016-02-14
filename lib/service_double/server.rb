@@ -19,7 +19,15 @@ module ServiceDouble
 
       path = "/#{params[:splat].first}"
 
-      PATH_RESPONSES.fetch(path).to_json
+      response = PATH_RESPONSES.fetch(path)
+
+      failure = response['fail']
+
+      if failure
+        halt(failure.fetch('code'), failure.fetch('message'))
+      else
+        response.to_json
+      end
     end
   end
 end
