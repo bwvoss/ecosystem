@@ -40,9 +40,11 @@ describe ServiceDouble do
       }
     )
 
-    status_code = described_class.inspect(path).code
+    response = described_class.inspect(path)
+    status_code = response.code
 
     expect(status_code).to eq(500)
+    expect(response.parsed_response).to eq('Blow up')
   end
 end
 

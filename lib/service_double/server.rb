@@ -24,7 +24,7 @@ module ServiceDouble
       failure = response['fail']
 
       if failure
-        halt(failure.fetch('code'), failure.fetch('message'))
+        halt(failure.fetch('code'), failure.fetch('message').to_json)
       else
         response.to_json
       end
