@@ -2,7 +2,10 @@ require 'verify/duration'
 
 describe Verify::Duration do
   let(:mock_context) do
-    { run_uuid: 'run_uuid' }
+    {
+      run_uuid: 'run_uuid',
+      metrics: []
+    }
   end
 
   let(:observe) do
@@ -12,15 +15,15 @@ describe Verify::Duration do
   end
 
   it 'executes the given block and returns the result' do
-    result, _metric = observe
+    result = observe
 
     expect(result).to eq(4)
   end
 
-  it 'returns the duration metric' do
-    _result, metric = observe
+  it 'adds the duration metric' do
+    observe
 
-    expect(metric[:time]).to be_utc
+    metric = mock_context.fetch(:metrics).first
     expect(metric[:action]).to eq('Class')
     expect(metric[:run_uuid]).to eq('run_uuid')
     expect(metric[:duration]).not_to be_nil

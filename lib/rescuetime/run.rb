@@ -9,7 +9,7 @@ module Rescuetime
         db: DB,
         table: :rescuetime_interval,
         http: HTTParty,
-        metric_receiver: metric_receiver(configuration),
+        metrics: metric_receiver(configuration),
         run_uuid: configuration.fetch(:run_uuid),
         api_domain: configuration.fetch(:api_domain),
         api_key: configuration.fetch(:api_key),

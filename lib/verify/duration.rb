@@ -5,15 +5,14 @@ module Verify
       result = yield
       duration = Time.now - start_time
 
-      metric = {
-        time: Time.now.utc,
+      context.fetch(:metrics) << {
         action: action.to_s,
         duration: duration,
         run_uuid: context.fetch(:run_uuid),
         type: 'duration'
       }
 
-      [result, metric]
+      result
     end
   end
 end

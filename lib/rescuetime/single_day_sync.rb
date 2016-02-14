@@ -28,14 +28,10 @@ module Rescuetime
     end
 
     def self.verifier(config)
-      Verify::Run.new(config.fetch(:metric_receiver), verifier_config)
-    end
-
-    def self.verifier_config
-      {
+      Verify::Run.new(
         'Http::Get': Verify::HttpGet,
         'Datastore::DeduplicatedInsert': Verify::DeduplicatedInsert
-      }
+      )
     end
   end
 end
