@@ -1,6 +1,6 @@
-require 'metric/duration'
+require 'verify/duration'
 
-describe Metric::Duration do
+describe Verify::Duration do
   let(:mock_context) do
     { run_uuid: 'run_uuid' }
   end

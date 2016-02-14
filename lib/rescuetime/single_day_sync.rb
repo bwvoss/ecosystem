@@ -1,10 +1,10 @@
 require 'datastore/deduplicated_insert'
 require 'http/get'
 require 'light-service'
-require 'metric/around_each_handler'
 require 'rescuetime/build_url'
-require 'rescuetime/handlers/deduplicated_insert'
-require 'rescuetime/handlers/http_get'
+require 'verify/run'
+require 'verify/deduplicated_insert'
+require 'verify/http_get'
 require 'rescuetime/parse_date_to_utc'
 require 'rescuetime/parse_rows'
 
@@ -13,7 +13,7 @@ module Rescuetime
     extend LightService::Organizer
     def self.call(config)
       with(config)
-        .around_each(handler(config))
+        .around_each(verifier(config))
         .reduce(actions)
     end
 
@@ -27,15 +27,14 @@ module Rescuetime
       ]
     end
 
-    def self.handler(config)
-      Metric::AroundEachHandler.new(config.fetch(:metric_receiver), handlers)
+    def self.verifier(config)
+      Verify::Run.new(config.fetch(:metric_receiver), verifier_config)
     end
 
-    def self.handlers
-      namespace = Rescuetime::Handlers
+    def self.verifier_config
       {
-        'Http::Get': namespace::HttpGet,
-        'Datastore::DeduplicatedInsert': namespace::DeduplicatedInsert
+        'Http::Get': Verify::HttpGet,
+        'Datastore::DeduplicatedInsert': Verify::DeduplicatedInsert
       }
     end
   end

@@ -1,4 +1,4 @@
-module Metric
+module Verify
   class Duration
     def self.call(action, context)
       start_time = Time.now

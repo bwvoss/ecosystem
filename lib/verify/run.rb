@@ -1,7 +1,7 @@
-require 'metric/duration'
+require 'verify/duration'
 
-module Metric
-  class AroundEachHandler
+module Verify
+  class Run
     def initialize(metric_datastore, handlers)
       @metric_datastore = metric_datastore
       @handlers = handlers
@@ -21,7 +21,7 @@ module Metric
     end
 
     def handler_for(action)
-      @handlers.fetch(action.to_s.to_sym, Metric::Duration)
+      @handlers.fetch(action.to_s.to_sym, Verify::Duration)
     end
   end
 end
