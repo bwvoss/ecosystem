@@ -13,7 +13,7 @@ module Rescuetime
     extend LightService::Organizer
     def self.call(config)
       with(config)
-        .around_each(verifier(config))
+        .around_each(verifier)
         .reduce(actions)
     end
 
@@ -27,7 +27,7 @@ module Rescuetime
       ]
     end
 
-    def self.verifier(config)
+    def self.verifier
       Verify::Run.new(
         'Http::Get': Verify::HttpGet,
         'Datastore::DeduplicatedInsert': Verify::DeduplicatedInsert
