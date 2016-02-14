@@ -14,8 +14,9 @@ describe 'Captures Duration metrics during rescuetime sync', :truncate do
     )
   end
 
+  let(:run_uuid) { 'lsdkfj278' }
   def actions_measured
-    duration_metrics = DB[:duration_metric].where(service: 'rescuetime')
+    duration_metrics = DB[:duration_metric].where(run_uuid: run_uuid)
 
     duration_metrics.map do |metric|
       metric[:action]
@@ -24,7 +25,7 @@ describe 'Captures Duration metrics during rescuetime sync', :truncate do
 
   it 'captures the duration of every action' do
     Rescuetime::Run.call(
-      run_uuid: 'lsdkfj278',
+      run_uuid: run_uuid,
       api_domain: "#{ServiceDouble::BASE_URL}/rescuetime",
       api_key: 'some-test-credential',
       datetime: utc_date('2015-10-02')

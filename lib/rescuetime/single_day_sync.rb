@@ -1,17 +1,19 @@
-require 'light-service'
-require 'metric/collector'
-require 'rescuetime/build_url'
-require 'rescuetime/parse_rows'
-require 'rescuetime/parse_date_to_utc'
-require 'http/get'
 require 'datastore/deduplicated_insert'
+require 'http/get'
+require 'light-service'
+require 'metric/around_each_handler'
+require 'rescuetime/build_url'
+require 'rescuetime/handlers/deduplicated_insert'
+require 'rescuetime/handlers/http_get'
+require 'rescuetime/parse_date_to_utc'
+require 'rescuetime/parse_rows'
 
 module Rescuetime
   class SingleDaySync
     extend LightService::Organizer
     def self.call(configuration)
       with(configuration)
-        .around_each(observer(configuration))
+        .around_each(handler(configuration))
         .reduce(actions)
     end
 
@@ -25,13 +27,16 @@ module Rescuetime
       ]
     end
 
-    def self.observer(configuration)
-      Metric::Collector.new(
+    def self.handler(configuration)
+      Metric::AroundEachHandler.new(
         configuration.fetch(:metric_receiver),
-        :rescuetime,
-        configuration.fetch(:run_uuid),
-        actions.last
+        'Http::Get': handlers::HttpGet,
+        'Datastore::DeduplicatedInsert': handlers::DeduplicatedInsert
       )
+    end
+
+    def self.handlers
+      Rescuetime::Handlers
     end
   end
 end

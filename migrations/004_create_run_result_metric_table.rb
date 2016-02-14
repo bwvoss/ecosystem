@@ -7,6 +7,7 @@ Sequel.migration do
       DateTime :time
       String :host
       String :run_uuid
+      String :action
       String :status
       String :error
     end

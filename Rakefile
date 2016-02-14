@@ -90,7 +90,7 @@ task :audit_gems do
   system('bundle exec bundle-audit')
 end
 
-task default: %w(spec lint audit_gems flog)
+task default: %w(spec lint audit_gems)
 
 task :service_double do
   system('cd lib/service_double/ && rackup config.ru')

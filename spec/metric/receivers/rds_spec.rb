@@ -2,7 +2,7 @@ require 'metric/receivers/rds'
 require 'spec_helper'
 
 describe Metric::Receivers::Rds do
-  it 'sends metrics to a relational database' do
+  it 'sends a metric' do
     receiver = described_class.new(DB)
 
     receiver << {
@@ -15,6 +15,28 @@ describe Metric::Receivers::Rds do
     expect(persisted_metric[:duration]).to eq(23)
     expect(persisted_metric[:host]).to eq('test-host')
     expect(persisted_metric.keys).not_to include('type')
+  end
+
+  it 'sends metrics' do
+    receiver = described_class.new(DB)
+
+    receiver << [
+      {
+        type: :duration,
+        host: 'test-host',
+        duration: 23
+      },
+      {
+        type: :duration,
+        host: 'test-host',
+        duration: 45
+      }
+    ]
+
+    expect(DB[:duration_metric].count).to eq(2)
+    metrics = DB[:duration_metric].all
+    expect(metrics.first[:duration]).to eq(23)
+    expect(metrics.last[:duration]).to eq(45)
   end
 
   context 'adds the following by default:' do
