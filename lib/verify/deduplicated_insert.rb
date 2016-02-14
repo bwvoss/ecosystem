@@ -9,15 +9,20 @@ module Verify
 
       metrics = [
         duration,
-        {
-          time: Time.now.utc,
-          run_uuid: context.fetch(:run_uuid),
-          type: 'run_result',
-          status: 'success'
-        }
+        build_successful_run_metric(action, context)
       ]
 
       [result, metrics]
+    end
+
+    def self.build_successful_run_metric(action, context)
+      {
+        time: Time.now.utc,
+        action: action.to_s,
+        run_uuid: context.fetch(:run_uuid),
+        type: 'run_result',
+        status: 'success'
+      }
     end
   end
 end
