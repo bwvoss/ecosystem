@@ -5,14 +5,14 @@ require 'verify/non_200_http_response'
 module Verify
   class HttpGet
     def self.call(action, context)
-      result = Verify::Duration.call(action, context) do
+      Verify::Duration.call(action, context) do
         yield
       end
 
-      result = Verify::Non200HttpResponse.call(action, result)
-      result = Verify::RescuetimeApiKey.call(action, result)
+      Verify::Non200HttpResponse.call(action, context)
+      Verify::RescuetimeApiKey.call(action, context)
 
-      result
+      context
     end
   end
 end

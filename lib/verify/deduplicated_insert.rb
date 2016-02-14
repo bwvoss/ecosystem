@@ -3,13 +3,13 @@ require 'verify/duration'
 module Verify
   class DeduplicatedInsert
     def self.call(action, context)
-      result = Verify::Duration.call(action, context) do
+      Verify::Duration.call(action, context) do
         yield
       end
 
       context.fetch(:metrics) << build_successful_run_metric(action, context)
 
-      result
+      context
     end
 
     def self.build_successful_run_metric(action, context)

@@ -9,8 +9,6 @@ module Verify
         metrics << build_error_metric(action, context, error)
         context[:failed_context_identifier] = 'rescuetime_http_exception'
       end
-
-      context
     end
 
     def self.build_error_metric(action, context, error)

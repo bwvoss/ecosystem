@@ -11,8 +11,6 @@ module Verify
         metrics << build_error_metric(action, context, api_key_error)
         context[:failed_context_identifier] = 'invalid_rescuetime_api_key'
       end
-
-      context
     end
 
     def self.build_error_metric(action, context, error)
