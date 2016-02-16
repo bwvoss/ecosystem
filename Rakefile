@@ -7,7 +7,7 @@ configs = YAML.load_file('configuration.yml')['development']
 DB = Datastore::Connection.new(configs['db_connection_string']).call
 
 namespace :rescuetime do
-  require 'rescuetime/single_day_sync'
+  require 'rescuetime/run'
   require 'httparty'
   require 'securerandom'
 
@@ -28,11 +28,7 @@ namespace :rescuetime do
       run_uuid = SecureRandom.uuid
       p "run uuid is: #{run_uuid}"
 
-      Rescuetime::SingleDaySync.call(
-        db: DB,
-        table: :rescuetime_interval,
-        http: HTTParty,
-        metric_receiver: Metric::Receivers::Rds.new(DB),
+      Rescuetime::Run.call(
         run_uuid: run_uuid,
         api_domain: 'https://www.rescuetime.com/anapi/data',
         api_key: configs['rescuetime_api_key'],

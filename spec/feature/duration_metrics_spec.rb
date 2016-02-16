@@ -31,7 +31,7 @@ describe 'Captures Duration metrics during rescuetime sync', :truncate do
       datetime: utc_date('2015-10-02')
     )
 
-    actions = Rescuetime::SingleDaySync.actions.map(&:to_s)
+    actions = Rescuetime::Run.actions.map(&:to_s)
     expect(actions_measured).to eq(actions)
   end
 end
