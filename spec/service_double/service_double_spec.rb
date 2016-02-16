@@ -1,14 +1,8 @@
 require 'service_double/service_double'
+require 'service_double/server'
 
 describe ServiceDouble do
   let(:path) { '/test_path' }
-
-  let(:set_call) do
-    described_class.set(
-      path: path,
-      response: { a: 2 }
-    )
-  end
 
   def parse(response)
     JSON.parse(
@@ -17,12 +11,11 @@ describe ServiceDouble do
     )
   end
 
-  it 'sets paths and responses' do
-    expect(JSON.parse(set_call.body)).to eq('a' => 2)
-  end
-
-  it 'inspects responses for paths' do
-    set_call
+  it 'sets and inspects responses for paths' do
+    described_class.set(
+      path: path,
+      response: { a: 2 }
+    )
 
     response = parse(described_class.inspect(path).body)
 
@@ -32,12 +25,8 @@ describe ServiceDouble do
   it 'sets errors and error messages' do
     described_class.set(
       path: path,
-      response: {
-        fail: {
-          code: 500,
-          message: 'Blow up'
-        }
-      }
+      code: 500,
+      response: 'Blow up'
     )
 
     response = described_class.inspect(path)
@@ -45,6 +34,21 @@ describe ServiceDouble do
 
     expect(status_code).to eq(500)
     expect(response.parsed_response).to eq('Blow up')
+  end
+
+  xit 'can hang before responding' do
+    described_class.set(
+      path: path,
+      response: { a: 2 },
+      hang: 0.01
+    )
+
+    response = described_class.inspect(path)
+
+    status_code = response.code
+
+    expect(status_code).to eq(200)
+    expect(parse(response.body)).to eq(a: 2)
   end
 end
 

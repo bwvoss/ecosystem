@@ -7,9 +7,13 @@ module ServiceDouble
 
     put '/__config__/set_response' do
       config = JSON.parse(request.body.read)
-
       response = config.fetch('response')
-      PATH_RESPONSES[config.fetch('path')] = response
+
+      PATH_RESPONSES[config.fetch('path')] = {
+        code: config.fetch('code', 200),
+        response: response,
+        hang: config['hang']
+      }
 
       response.to_json
     end
@@ -19,14 +23,18 @@ module ServiceDouble
 
       path = "/#{params[:splat].first}"
 
-      response = PATH_RESPONSES.fetch(path)
+      path_config = PATH_RESPONSES.fetch(path)
 
-      failure = response['fail']
+      code = path_config.fetch(:code)
+      response = path_config.fetch(:response).to_json
 
-      if failure
-        halt(failure.fetch('code'), failure.fetch('message').to_json)
+      hang = path_config[:hang]
+      sleep(hang) if hang
+
+      if code != 200
+        halt(code, response)
       else
-        response.to_json
+        response
       end
     end
   end

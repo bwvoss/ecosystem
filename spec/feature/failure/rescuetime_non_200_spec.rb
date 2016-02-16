@@ -7,12 +7,8 @@ describe 'Capturing non 200 errors from rescuetime', :truncate do
   def set_error_response
     ServiceDouble.set(
       path: '/rescuetime',
-      response: {
-        fail: {
-          code: 500,
-          message: error_message
-        }
-      }
+      code: 500,
+      response: error_message
     )
   end
 
