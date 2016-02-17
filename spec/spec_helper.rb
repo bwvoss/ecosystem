@@ -14,6 +14,12 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
+  config.before(:all) do
+    @mock_querystring = '?key=some-test-credential&restrict_begin=2015-10-02'\
+                        '&restrict_end=2015-10-02&perspective=interval'\
+                        '&resolution_time=minute&format=json'
+  end
+
   # integration tests dont play nicely with transaction cleaning
   config.before(:all, :truncate) do
     DatabaseCleaner.strategy = :truncation

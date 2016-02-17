@@ -21,9 +21,15 @@ module ServiceDouble
     get '/*' do
       content_type :json
 
-      path = "/#{params[:splat].first}"
+      query_string = request.query_string
 
-      path_config = PATH_RESPONSES.fetch(path)
+      if !query_string.empty?
+        key = "#{request.path}?#{request.query_string}"
+      else
+        key = request.path
+      end
+
+      path_config = PATH_RESPONSES.fetch(key)
 
       code = path_config.fetch(:code)
       response = path_config.fetch(:response).to_json

@@ -6,7 +6,7 @@ describe 'Capturing errors from an invalid API key', :truncate do
   def set_invalid_api_key_response
     # Yes, rescuetime responds with a 200
     ServiceDouble.set(
-      path: '/rescuetime',
+      path: "/rescuetime#{@mock_querystring}",
       response: {
         error: '# key not found',
         messages: 'key not found'

@@ -16,7 +16,7 @@ describe 'Rescuetime Data Sync', :truncate do
 
   before :all do
     ServiceDouble.set(
-      path: '/rescuetime',
+      path: "/rescuetime#{@mock_querystring}",
       response: {
         row_headers: TestData::RescuetimeResponse.headers,
         rows: TestData::RescuetimeResponse.rows
@@ -70,7 +70,7 @@ describe 'Rescuetime Data Sync', :truncate do
     ]
 
     ServiceDouble.set(
-      path: '/rescuetime/deduplication',
+      path: "/rescuetime/deduplication#{@mock_querystring}",
       response: {
         row_headers: TestData::RescuetimeResponse.headers,
         rows: TestData::RescuetimeResponse.rows + new_rows

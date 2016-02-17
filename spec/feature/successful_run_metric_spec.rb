@@ -6,7 +6,7 @@ require 'spec_helper'
 describe 'Recording success at the end of the run', :truncate do
   before :all do
     ServiceDouble.set(
-      path: '/rescuetime',
+      path: "/rescuetime#{@mock_querystring}",
       response: {
         row_headers: TestData::RescuetimeResponse.headers,
         rows: TestData::RescuetimeResponse.rows

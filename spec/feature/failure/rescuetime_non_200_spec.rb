@@ -6,7 +6,7 @@ describe 'Capturing non 200 errors from rescuetime', :truncate do
   let(:error_message) { '500 blow up' }
   def set_error_response
     ServiceDouble.set(
-      path: '/rescuetime',
+      path: "/rescuetime#{@mock_querystring}",
       code: 500,
       response: error_message
     )

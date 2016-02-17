@@ -22,6 +22,19 @@ describe ServiceDouble do
     expect(response).to eq(a: 2)
   end
 
+  it 'uses the full querystring' do
+    path = '/foo?baz=bar'
+
+    described_class.set(
+      path: path,
+      response: { foo: 'bar' }
+    )
+
+    response = parse(described_class.inspect(path).body)
+
+    expect(response).to eq(foo: 'bar')
+  end
+
   it 'sets errors and error messages' do
     described_class.set(
       path: path,
