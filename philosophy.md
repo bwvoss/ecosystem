@@ -8,37 +8,7 @@ average test time, no test greater than N ms, or if a test is greater than 1 sec
 probably will need some sort of slow suite for longer tests, though they shouldn't be necessary
 to run for usual development
 
-### Breakdown of testing levels:
-
-unit -> component -> integration -> end-to-end/system
-
-Unit [fakes]
-this ensures a single unit works in isolation.  This will have the most isolation and speed, and which allows us to get precise with use cases to test.
-
-
-Component
-We should have documentation for:
-- failure states (fakes -- the exceptions raised should be documented in the contract tests)
-- security (at the software level? Fuzzer for inputs?) -- could start provisioning images while reading into this...
-- performance (in a standard environment -- maybe move it to system due to this)
-What exactly is important for perf testing?  Hardware?  Metrics? Do I mock services since the service will introduce large variance and I need isolation -- similar to testing behavior.
-- concurrency gaurentees
-
-A component also implies idempotence, and that it can be executed as an independent process.
-
-Integration/Feature
-Shows that the components are hooked in together correctly
-
-End-to-end matters on who is consuming the component(s) -- is it through a worker?  Through a web interface?  This matters because the system should behave differently if not dealing with a user online and thus different end-to-end requirements.
-
-Concerns:
-- system response to failure (chaos)
-- data integrity
-- security, specifically around network configurations (security monkey)
-- performance
-- happy path
-
-With a component test we care about these things in the microcosom of that package.  While a subsystem can be ensured to work well, we also want to know that all cooperating subsystems are held to the same standard in an automated, transparent way.
+### Test db constraints explicitly
 
 ### 1 Depth chain of responsibility
 

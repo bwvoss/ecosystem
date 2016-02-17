@@ -17,17 +17,17 @@ describe 'Enforcing uniqueness on rescuetime intervals' do
   it 'enforces uniqueness on all fields' do
     add_record
 
-    expect {
+    expect do
       add_record
-    }.to raise_error(Sequel::UniqueConstraintViolation)
+    end.to raise_error(Sequel::UniqueConstraintViolation)
   end
 
   it 'will not raise if one field is different' do
     add_record
 
-    expect {
+    expect do
       add_record(productivity: 0)
-    }.not_to raise_error
+    end.not_to raise_error
   end
 end
 

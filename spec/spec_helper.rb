@@ -30,10 +30,6 @@ RSpec.configure do |config|
   end
 end
 
-def utc_date(date_string)
-  Time.parse(date_string).utc
-end
-
 require 'service_double/service_double'
 require 'test_data/rescuetime_response'
 
@@ -62,7 +58,7 @@ def run_rescuetime
     run_uuid: 'lsdkfj278',
     api_domain: "#{ServiceDouble::BASE_URL}/rescuetime",
     api_key: 'some-test-credential',
-    datetime: utc_date('2015-10-02')
+    datetime: Time.parse('2015-10-02').utc
   )
 end
 
