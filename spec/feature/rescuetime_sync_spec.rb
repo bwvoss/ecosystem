@@ -1,37 +1,12 @@
-require 'rescuetime/run'
-require 'metric/receivers/no_op'
-require 'service_double/service_double'
-require 'test_data/rescuetime_response'
 require 'spec_helper'
 
 describe 'Rescuetime Data Sync', :truncate do
-  let(:rescuetime_api_domain) { "#{ServiceDouble::BASE_URL}/rescuetime" }
-  let(:rescuetime_deduplication_api_domain) do
-    "#{ServiceDouble::BASE_URL}/rescuetime/deduplication"
-  end
-
   def rescuetime_record_count
     DB[:rescuetime_interval].count
   end
 
   before :all do
-    ServiceDouble.set(
-      path: "/rescuetime#{@mock_querystring}",
-      response: {
-        row_headers: TestData::RescuetimeResponse.headers,
-        rows: TestData::RescuetimeResponse.rows
-      }
-    )
-  end
-
-  def sync(api_domain = rescuetime_api_domain)
-    Rescuetime::Run.call(
-      metric_receiver: Metric::Receivers::NoOp.new,
-      run_uuid: 'lskdjf838',
-      api_domain: api_domain,
-      api_key: 'some-test-credential',
-      datetime: utc_date('2015-10-02')
-    )
+    configure_rescuetime_response
   end
 
   def assert_all_records_saved
@@ -41,7 +16,7 @@ describe 'Rescuetime Data Sync', :truncate do
   it 'for a day' do
     expect(rescuetime_record_count).to eq(0)
 
-    sync
+    run_rescuetime
 
     assert_all_records_saved
   end
@@ -49,12 +24,12 @@ describe 'Rescuetime Data Sync', :truncate do
   it 'does not copy data' do
     expect(rescuetime_record_count).to eq(0)
 
-    sync
+    run_rescuetime
 
     assert_all_records_saved
 
     expect do
-      sync
+      run_rescuetime
     end.not_to change { rescuetime_record_count }
   end
 
@@ -62,28 +37,28 @@ describe 'Rescuetime Data Sync', :truncate do
     expect(rescuetime_record_count).to eq(8)
   end
 
-  it 'saves only new data from rescuetime' do
+  def add_deduplicated_records
     new_rows = [
       ['2015-10-02T09:50:00', 70, 1, 'shophex.com', 'Uncategorized', 0],
       ['2015-10-02T09:50:00', 43, 1, 'kk.org', 'News & Opinion', -2],
       ['2015-10-02T09:50:00', 14, 1, 'google.com', 'Search', 0]
     ]
 
-    ServiceDouble.set(
-      path: "/rescuetime/deduplication#{@mock_querystring}",
-      response: {
-        row_headers: TestData::RescuetimeResponse.headers,
-        rows: TestData::RescuetimeResponse.rows + new_rows
-      }
-    )
+    config = rescuetime_config
+    config[:response][:rows] = config[:response][:rows] + new_rows
+    configure_rescuetime_response(config)
+  end
 
+  it 'saves only new data from rescuetime' do
     expect(rescuetime_record_count).to eq(0)
 
-    sync
+    run_rescuetime
 
     assert_all_records_saved
 
-    sync(rescuetime_deduplication_api_domain)
+    add_deduplicated_records
+
+    run_rescuetime
 
     assert_only_new_records_saved
   end
