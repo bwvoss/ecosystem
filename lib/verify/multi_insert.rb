@@ -1,7 +1,7 @@
 require 'verify/duration'
 
 module Verify
-  class DeduplicatedInsert
+  class MultiInsert
     def self.call(action, context)
       Verify::Duration.call(action, context) do
         yield
