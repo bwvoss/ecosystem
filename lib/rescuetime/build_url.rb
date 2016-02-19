@@ -4,11 +4,12 @@ module Rescuetime
   class BuildUrl
     extend LightService::Action
     expects :api_domain, :api_key, :datetime
-    promises :get_url
+    promises :get_url, :formatted_date
 
     executed do |ctx|
       formatted_date = ctx.datetime.strftime('%Y-%m-%d')
 
+      ctx.formatted_date = formatted_date
       ctx.get_url =
         "#{ctx.api_domain}?"\
         "key=#{ctx.api_key}&"\

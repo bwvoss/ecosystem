@@ -1,12 +1,18 @@
 require 'spec_helper'
+require 'rescuetime/transactions/get'
+require 'rescuetime/transactions/destroy'
 
-describe 'Rescuetime Data Sync', :truncate do
+describe 'Rescuetime Data Sync' do
   def rescuetime_record_count
-    DB[:rescuetime_interval].count
+    Rescuetime::Transactions::Get.execute(date: '2015-10-02').count
   end
 
   before :all do
     configure_rescuetime_response
+  end
+
+  before :each do
+    Rescuetime::Transactions::Destroy.execute(date: '2015-10-02')
   end
 
   def assert_all_records_saved

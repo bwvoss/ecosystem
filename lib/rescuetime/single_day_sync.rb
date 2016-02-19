@@ -1,4 +1,3 @@
-require 'datastore/deduplicated_insert'
 require 'http/get'
 require 'light-service'
 require 'rescuetime/build_url'
@@ -6,6 +5,7 @@ require 'verify/run'
 require 'verify/deduplicated_insert'
 require 'verify/http_get'
 require 'rescuetime/parse_date_to_utc'
+require 'rescuetime/transactions/multi_insert'
 require 'rescuetime/parse_rows'
 
 module Rescuetime
@@ -23,14 +23,14 @@ module Rescuetime
         Http::Get,
         Rescuetime::ParseRows,
         Rescuetime::ParseDateToUtc,
-        Datastore::DeduplicatedInsert
+        Rescuetime::Transactions::MultiInsert
       ]
     end
 
     def self.verifier
       Verify::Run.new(
         'Http::Get': Verify::HttpGet,
-        'Datastore::DeduplicatedInsert': Verify::DeduplicatedInsert
+        'Rescuetime::Transactions::MultiInsert': Verify::DeduplicatedInsert
       )
     end
   end

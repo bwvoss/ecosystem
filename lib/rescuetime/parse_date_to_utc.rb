@@ -10,7 +10,7 @@ module Rescuetime
     executed do |ctx|
       converted_rows = ctx.parsed_rescuetime_rows.map do |row|
         date = row.fetch(:date)
-        date_to_utc = ActiveSupport::TimeZone[ctx.timezone].parse(date).utc
+        date_to_utc = ActiveSupport::TimeZone[ctx.timezone].parse(date).utc.to_s
         row.merge(date: date_to_utc)
       end
 

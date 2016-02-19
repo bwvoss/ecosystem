@@ -4,6 +4,7 @@ gem 'activesupport',          '~> 4.2.4'
 gem 'httparty',               '~> 0.10.0'
 gem 'rake',                   '~> 10.4.2'
 gem 'light-service', git: 'https://github.com/adomokos/light-service', branch: 'master'
+gem 'msgpack', '~> 0.5.12'
 
 group :datastore do
   gem 'pg',     '~> 0.18.2'

@@ -35,6 +35,7 @@ GEM
     json (1.8.3)
     method_source (0.8.2)
     minitest (5.8.0)
+    msgpack (0.5.12)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     parser (2.2.2.6)
@@ -98,6 +99,7 @@ DEPENDENCIES
   flog (~> 4.3.2)
   httparty (~> 0.10.0)
   light-service!
+  msgpack (~> 0.5.12)
   pg (~> 0.18.2)
   pry (~> 0.10.0)
   rack-test (~> 0.6.3)
