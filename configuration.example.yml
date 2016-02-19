@@ -1,6 +1,5 @@
 development: &common
   rescuetime_api_key: "fill in"
-  db_connection_string: "fill in"
 
 test:
   <<: *common

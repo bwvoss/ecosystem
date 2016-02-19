@@ -6,11 +6,6 @@ gem 'rake',                   '~> 10.4.2'
 gem 'light-service', git: 'https://github.com/adomokos/light-service', branch: 'master'
 gem 'msgpack', '~> 0.5.12'
 
-group :datastore do
-  gem 'pg',     '~> 0.18.2'
-  gem 'sequel', '~> 4.25.0'
-end
-
 group :development do
   gem 'pry', '~> 0.10.0'
   gem 'daemons', '~> 1.2.3'
@@ -20,7 +15,6 @@ group :development do
 end
 
 group :test do
-  gem 'database_cleaner', '~> 1.5.0'
   gem 'rspec',            '~> 3.3.0'
 end
 
