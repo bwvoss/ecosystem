@@ -1,14 +1,16 @@
 require 'verify/duration'
+require 'metric/transactions/send'
 
 module Verify
-  class MultiInsert
+  class SuccessfulRun
     def self.call(action, context)
+      context.fetch(:metrics) << build_successful_run_metric(action, context)
+
       Verify::Duration.call(action, context) do
         yield
       end
 
-      context.fetch(:metrics) << build_successful_run_metric(action, context)
-
+      Metric::Transactions::Send.execute(context)
       context
     end
 

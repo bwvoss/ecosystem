@@ -1,13 +1,21 @@
 require 'spec_helper'
+require 'transactions/get'
+require 'transactions/truncate'
 
 describe 'Captures Duration metrics during rescuetime sync', :truncate do
   let(:run_uuid) { 'lsdkfj278' }
   def actions_measured
-    duration_metrics = DB[:duration_metric].where(run_uuid: run_uuid)
+    Transactions::Get.call(
+      identifier: 'duration',
+      date: '2015-10-02'
+    ).map { |m| m['action'] }
+  end
 
-    duration_metrics.map do |metric|
-      metric[:action]
-    end
+  before :each do
+    Transactions::Truncate.call(
+      identifier: 'duration',
+      date: '2015-10-02'
+    )
   end
 
   it 'captures the duration of every action' do

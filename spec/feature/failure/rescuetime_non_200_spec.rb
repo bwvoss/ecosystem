@@ -1,9 +1,21 @@
 require 'spec_helper'
+require 'transactions/get'
+require 'transactions/truncate'
 
 describe 'Capturing non 200 errors from rescuetime', :truncate do
   let(:error_message) { '500 blow up' }
   let(:result_record) do
-    DB[:run_result_metric].first
+    Transactions::Get.call(
+      identifier: 'run_result',
+      date: '2015-10-02'
+    ).first
+  end
+
+  before :each do
+    Transactions::Truncate.call(
+      identifier: 'run_result',
+      date: '2015-10-02'
+    )
   end
 
   it 'captures the error and returns specific failure identifier' do
@@ -19,8 +31,8 @@ describe 'Capturing non 200 errors from rescuetime', :truncate do
       'rescuetime_http_exception'
     )
 
-    expect(result_record[:status]).to eq('failure')
-    expect(result_record[:error]).to eq("500: #{error_message}")
+    expect(result_record['status']).to eq('failure')
+    expect(result_record['error']).to eq("500: #{error_message}")
   end
 end
 

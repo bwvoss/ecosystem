@@ -2,7 +2,7 @@ require 'http/get'
 require 'light-service'
 require 'rescuetime/build_url'
 require 'verify/run'
-require 'verify/multi_insert'
+require 'verify/successful_run'
 require 'verify/http_get'
 require 'rescuetime/parse_date_to_utc'
 require 'rescuetime/transactions/multi_insert'
@@ -30,7 +30,7 @@ module Rescuetime
     def self.verifier
       Verify::Run.new(
         'Http::Get': Verify::HttpGet,
-        'Rescuetime::Transactions::MultiInsert': Verify::MultiInsert
+        'Rescuetime::Transactions::MultiInsert': Verify::SuccessfulRun
       )
     end
   end

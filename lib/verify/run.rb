@@ -1,4 +1,5 @@
 require 'verify/duration'
+require 'metric/transactions/send'
 
 module Verify
   class Run
@@ -12,7 +13,10 @@ module Verify
       end
 
       failed_context_identifier = result[:failed_context_identifier]
-      context.fail!(failed_context_identifier) if failed_context_identifier
+      if failed_context_identifier
+        Metric::Transactions::Send.execute(context)
+        context.fail!(failed_context_identifier)
+      end
 
       result
     end
