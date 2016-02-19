@@ -1,26 +1,23 @@
 require 'rescuetime/transactions/multi_insert'
 require 'rescuetime/transactions/get'
+require 'rescuetime/transactions/truncate'
 
 describe Rescuetime::Transactions::MultiInsert do
   it 'persists the records' do
-    transaction_dir = 'spec/file_sandbox'
-    records = [{'a' => '12'}]
+    records = [{ 'a' => '12' }]
     date = '10-20-2015'
 
     described_class.execute(
-      transaction_dir: transaction_dir,
       formatted_date: date,
       converted_rescuetime_rows: records
     )
 
-    retrieved_records = Rescuetime::Transactions::Get.execute(
-      transaction_dir: transaction_dir,
-      date: date
-    )
+    retrieved_records = Rescuetime::Transactions::Get.execute(date: date)
 
     expect(retrieved_records).to eq(records)
+    expect(File.exist?("spec/file_sandbox/#{date}")).to be_truthy
 
-    File.delete("#{transaction_dir}/#{date}")
+    Rescuetime::Transactions::Truncate.execute(date: date)
   end
 end
 

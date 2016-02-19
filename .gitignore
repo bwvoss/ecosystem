@@ -6,4 +6,4 @@ dashboards/bower_components
 dashboards/node_modules
 csv
 insipia
-
+spec/file_sandbox/
