@@ -7,7 +7,7 @@ module Rescuetime
     def self.call(configuration)
       Rescuetime::SingleDaySync.call(
         http: HTTParty,
-        metrics: Metric::Receiver.new,
+        metric_collector: Metric::Receiver.new,
         run_uuid: configuration.fetch(:run_uuid),
         api_domain: configuration.fetch(:api_domain),
         api_key: configuration.fetch(:api_key),

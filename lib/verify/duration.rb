@@ -5,7 +5,7 @@ module Verify
       result = yield
       duration = Time.now - start_time
 
-      context.fetch(:metrics) << {
+      context.fetch(:metric_collector) << {
         action: action.to_s,
         duration: duration,
         run_uuid: context.fetch(:run_uuid),

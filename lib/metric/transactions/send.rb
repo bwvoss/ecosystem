@@ -7,10 +7,10 @@ module Metric
   module Transactions
     class Send
       extend LightService::Action
-      expects :metrics, :formatted_date
+      expects :metric_collector, :formatted_date
 
       executed do |context|
-        metrics = context.fetch(:metrics).metrics
+        metrics = context.fetch(:metric_collector).metrics
         metrics.each do |metric_type, timeseries|
           encoded = timeseries.to_msgpack
           compressed = Zlib::Deflate.deflate(encoded)

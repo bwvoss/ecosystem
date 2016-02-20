@@ -5,7 +5,7 @@ module Verify
 
       unless get_response.success?
         error = "#{get_response.code}: #{get_response.parsed_response}"
-        metrics = context.fetch(:metrics)
+        metrics = context.fetch(:metric_collector)
         metrics << build_error_metric(action, context, error)
         context[:failed_context_identifier] = 'rescuetime_http_exception'
       end

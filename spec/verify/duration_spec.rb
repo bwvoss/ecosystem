@@ -4,7 +4,7 @@ describe Verify::Duration do
   let(:mock_context) do
     {
       run_uuid: 'run_uuid',
-      metrics: []
+      metric_collector: []
     }
   end
 
@@ -23,7 +23,7 @@ describe Verify::Duration do
   it 'adds the duration metric' do
     observe
 
-    metric = mock_context.fetch(:metrics).first
+    metric = mock_context.fetch(:metric_collector).first
     expect(metric[:action]).to eq('Class')
     expect(metric[:run_uuid]).to eq('run_uuid')
     expect(metric[:duration]).not_to be_nil

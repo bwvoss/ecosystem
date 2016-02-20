@@ -7,7 +7,7 @@ module Verify
 
       if error == '# key not found'
         api_key_error = Rescuetime::InvalidApiKeyError.new.to_s
-        metrics = context.fetch(:metrics)
+        metrics = context.fetch(:metric_collector)
         metrics << build_error_metric(action, context, api_key_error)
         context[:failed_context_identifier] = 'invalid_rescuetime_api_key'
       end
