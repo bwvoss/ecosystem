@@ -1,6 +1,0 @@
----
-- hosts: all
-
-  roles:
-    - redouane.influxdb
-    - redouane.grafana
