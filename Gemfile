@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'activesupport',          '~> 4.2.4'
 gem 'httparty',               '~> 0.10.0'
 gem 'rake',                   '~> 10.4.2'
-gem 'light-service', git: 'https://github.com/adomokos/light-service', branch: 'master'
+gem 'light-service',  '~> 0.6.1'
 gem 'msgpack', '~> 0.5.12'
 
 group :development do
