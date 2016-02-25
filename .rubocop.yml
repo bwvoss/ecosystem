@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'infrastructure/**/*'
+    - 'bin/**/*'
     - 'spec/metric/feature/timeseries_spec.rb'
     - 'spec/generator/feature/*'
     - 'spec/test_data/flog/*'

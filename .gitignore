@@ -7,3 +7,4 @@ dashboards/node_modules
 csv
 insipia
 spec/file_sandbox/
+.rake_tasks~
