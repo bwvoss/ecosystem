@@ -1,0 +1,9 @@
+#!/bin/bash
+
+resource=$1
+
+sed "s/RESOURCE/$resource/g" test_template.json > test.json
+
+packer validate test.json
+packer build test.json
+rm test.json

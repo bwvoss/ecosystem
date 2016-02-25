@@ -1,5 +1,0 @@
----
-- hosts: all
-
-  roles:
-    - { role: ANXS.postgresql, postgresql_listen_addresses: "*" }

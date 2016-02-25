@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# To be used when the vanilla test image needs an update
+packer validate test_base/test_base.json
+packer build test_base/test_base.json

@@ -1,5 +1,0 @@
-desc "Totally wipes away vagrant box"
-task :cleanup do
-  system("vagrant destroy")
-  system("vagrant box remove postgresql")
-end

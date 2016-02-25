@@ -1,5 +1,0 @@
-In case of destruction of VM, to get port forwarding working with postgresql:
-
-listen_addresses = '*' in /etc/postgresql.conf
-
-host all all all trust as the last line in /etc/pg_hba.conf

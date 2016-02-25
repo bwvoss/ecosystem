@@ -1,0 +1,21 @@
+{
+  "builders": [{
+    "type": "docker",
+    "pull": false,
+    "image": "test-base:0.1",
+    "discard": true
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "RESOURCE/",
+    "destination": "/tmp/RESOURCE/"
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "/tmp/RESOURCE/install",
+      "bats /tmp/RESOURCE/install_test.bats"
+    ]
+  }
+ ]
+}

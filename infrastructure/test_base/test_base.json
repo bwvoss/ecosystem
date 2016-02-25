@@ -1,0 +1,30 @@
+{
+  "builders": [{
+    "type": "docker",
+    "image": "debian:jessie",
+    "commit": true
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "bats/",
+    "destination": "/tmp/bats/"
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "/tmp/bats/install.sh /usr/local",
+      "apt-get update -y"
+    ]
+  }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "test-base",
+        "tag": "0.1",
+        "force": true
+      }
+    ]
+  ]
+}
