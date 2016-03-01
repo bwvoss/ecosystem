@@ -1,9 +1,17 @@
 #!/bin/bash
 
 resource=$1
+is_debug=$2
 
-sed "s/RESOURCE/$resource/g" test_template.json > test.json
+function create_test_file {
+  sed "s/RESOURCE/$resource/g" $1 > test.json
+}
+
+if [ "$is_debug" == "debug" ]; then
+  create_test_file test_debugging_template.json
+else
+  create_test_file test_template.json
+fi
 
 packer validate test.json
 packer build test.json
-rm test.json

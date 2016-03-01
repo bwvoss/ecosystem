@@ -1,0 +1,31 @@
+{
+  "builders": [{
+    "type": "docker",
+    "pull": false,
+    "image": "test-base:0.1",
+    "commit": true
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "RESOURCE/",
+    "destination": "/tmp/RESOURCE/"
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "/tmp/RESOURCE/install",
+      "bats /tmp/RESOURCE/",
+      "rm -rf /tmp/RESOURCE/",
+      "rm -rf /tmp/bats/"
+    ]
+  }
+ ],
+  "post-processors": [
+      {
+        "type": "docker-tag",
+        "repository": "RESOURCE",
+        "tag": "0.1",
+        "force": true
+      }
+  ]
+}

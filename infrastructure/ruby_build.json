@@ -1,0 +1,30 @@
+{
+  "builders": [{
+    "type": "docker",
+    "pull": false,
+    "image": "test-base:0.1",
+    "commit": true
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "ruby/",
+    "destination": "/tmp/ruby/"
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "/tmp/ruby/install",
+      "bats /tmp/ruby/",
+      "rm -rf /tmp/ruby/"
+    ]
+  }
+ ],
+  "post-processors": [
+      {
+        "type": "docker-tag",
+        "repository": "ruby",
+        "tag": "0.1",
+        "force": true
+      }
+  ]
+}
