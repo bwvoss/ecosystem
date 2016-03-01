@@ -5,7 +5,7 @@ module Rescuetime
   class ParseDateToUtc
     extend LightService::Action
     expects :parsed_rescuetime_rows, :timezone
-    promises :converted_rescuetime_rows
+    promises :rescuetime_rows
 
     executed do |ctx|
       converted_rows = ctx.parsed_rescuetime_rows.map do |row|
@@ -14,7 +14,7 @@ module Rescuetime
         row.merge(date: date_to_utc)
       end
 
-      ctx.converted_rescuetime_rows = converted_rows
+      ctx.rescuetime_rows = converted_rows
     end
   end
 end

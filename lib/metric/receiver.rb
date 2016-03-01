@@ -7,7 +7,7 @@ module Metric
     end
 
     def <<(metric)
-      type = metric.delete(:type)
+      type = metric.delete(:type).to_sym
 
       metric[:host] = metric.fetch(:host, Socket.gethostname)
       metric[:time] = metric.fetch(:time, Time.now.utc.to_s)

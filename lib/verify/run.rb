@@ -1,5 +1,5 @@
 require 'verify/duration'
-require 'metric/transactions/send'
+require 'rescuetime/build_response'
 
 module Verify
   class Run
@@ -14,7 +14,7 @@ module Verify
 
       failed_context_identifier = result[:failed_context_identifier]
       if failed_context_identifier
-        Metric::Transactions::Send.execute(context)
+        context = Rescuetime::BuildResponse.execute(result)
         context.fail!(failed_context_identifier)
       end
 

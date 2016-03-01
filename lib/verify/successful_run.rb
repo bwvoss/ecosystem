@@ -11,7 +11,6 @@ module Verify
         yield
       end
 
-      Metric::Transactions::Send.execute(context)
       context
     end
 
