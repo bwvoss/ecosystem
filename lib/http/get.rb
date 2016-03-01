@@ -1,14 +1,14 @@
-require 'light-service'
+require 'httparty'
 
 module Http
   class Get
-    extend LightService::Action
-    expects :get_url, :http
-    promises :get_response
+    def self.execute(ctx)
+      get_url = ctx.fetch(:get_url)
+      http = ctx.fetch(:http, HTTParty)
+      get_response = http.get(get_url)
+      ctx[:get_response] = get_response
 
-    executed do |ctx|
-      get_response = ctx.http.get(ctx.get_url)
-      ctx.get_response = get_response
+      ctx
     end
   end
 end

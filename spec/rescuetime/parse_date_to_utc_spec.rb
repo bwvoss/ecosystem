@@ -12,7 +12,7 @@ describe Rescuetime::ParseDateToUtc do
       parsed_rescuetime_rows: parsed_rows,
       timezone: timezone
     )
-    transformed_rows = result.rescuetime_rows
+    transformed_rows = result.fetch(:rescuetime_rows)
 
     expect(transformed_rows.first[:date]).not_to eq(original_date)
   end

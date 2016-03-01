@@ -1,5 +1,4 @@
 require 'verify/duration'
-require 'metric/transactions/send'
 
 module Verify
   class SuccessfulRun

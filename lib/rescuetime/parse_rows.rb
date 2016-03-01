@@ -1,13 +1,7 @@
-require 'light-service'
-
 module Rescuetime
   class ParseRows
-    extend LightService::Action
-    expects :get_response
-    promises :parsed_rescuetime_rows
-
-    executed do |ctx|
-      rows = ctx.get_response.fetch('rows')
+    def self.execute(ctx)
+      rows = ctx.fetch(:get_response).fetch('rows')
       parsed_rows = rows.map do |row|
         {
           date:                  row[0],
@@ -19,7 +13,9 @@ module Rescuetime
         }
       end
 
-      ctx.parsed_rescuetime_rows = parsed_rows
+      ctx[:parsed_rescuetime_rows] = parsed_rows
+
+      ctx
     end
   end
 end

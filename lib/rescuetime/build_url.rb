@@ -1,23 +1,19 @@
-require 'light-service'
-
 module Rescuetime
   class BuildUrl
-    extend LightService::Action
-    expects :api_domain, :api_key, :datetime
-    promises :get_url, :formatted_date
+    def self.execute(ctx)
+      formatted_date = ctx.fetch(:datetime).strftime('%Y-%m-%d')
 
-    executed do |ctx|
-      formatted_date = ctx.datetime.strftime('%Y-%m-%d')
-
-      ctx.formatted_date = formatted_date
-      ctx.get_url =
-        "#{ctx.api_domain}?"\
-        "key=#{ctx.api_key}&"\
+      ctx[:formatted_date] = formatted_date
+      ctx[:get_url] =
+        "#{ctx.fetch(:api_domain)}?"\
+        "key=#{ctx.fetch(:api_key)}&"\
         "restrict_begin=#{formatted_date}&"\
         "restrict_end=#{formatted_date}&"\
         'perspective=interval&'\
         'resolution_time=minute&'\
         'format=json'
+
+      ctx
     end
   end
 end

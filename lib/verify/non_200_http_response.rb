@@ -1,7 +1,7 @@
 module Verify
   class Non200HttpResponse
     def self.call(action, context)
-      get_response = context.get_response
+      get_response = context.fetch(:get_response)
 
       unless get_response.success?
         error = "#{get_response.code}: #{get_response.parsed_response}"

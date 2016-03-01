@@ -1,4 +1,3 @@
-require 'httparty'
 require 'metric/receiver'
 require 'rescuetime/single_day_sync'
 
@@ -6,7 +5,6 @@ module Rescuetime
   class Run
     def self.call(configuration)
       Rescuetime::SingleDaySync.call(
-        http: HTTParty,
         metric_collector: Metric::Receiver.new,
         run_uuid: configuration.fetch(:run_uuid),
         api_domain: configuration.fetch(:api_domain),

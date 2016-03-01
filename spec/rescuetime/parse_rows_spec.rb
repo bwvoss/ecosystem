@@ -16,7 +16,7 @@ describe Rescuetime::ParseRows do
 
   let(:parsed_rows) do
     result = described_class.execute(get_response: response)
-    result.parsed_rescuetime_rows
+    result.fetch(:parsed_rescuetime_rows)
   end
 
   context 'returns the following data per event:' do

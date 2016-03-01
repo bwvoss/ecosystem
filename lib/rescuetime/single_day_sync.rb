@@ -1,7 +1,6 @@
 require 'http/get'
-require 'light-service'
 require 'rescuetime/build_url'
-require 'verify/run'
+require 'verify/duration'
 require 'verify/successful_run'
 require 'verify/http_get'
 require 'rescuetime/parse_date_to_utc'
@@ -10,29 +9,26 @@ require 'rescuetime/parse_rows'
 
 module Rescuetime
   class SingleDaySync
-    extend LightService::Organizer
+    def self.call(context)
+      configuration.each do |item|
+        action = item.fetch(:action)
 
-    def self.call(config)
-      with(config)
-        .around_each(verifier)
-        .reduce(actions)
+        item.fetch(:monitor).call(action, context) do
+          context = action.execute(context)
+        end
+      end
+
+      context
     end
 
-    def self.actions
+    def self.configuration
       [
-        Rescuetime::BuildUrl,
-        Http::Get,
-        Rescuetime::ParseRows,
-        Rescuetime::ParseDateToUtc,
-        Rescuetime::BuildResponse
+        { action: Rescuetime::BuildUrl, monitor: Verify::Duration },
+        { action: Http::Get, monitor: Verify::Duration },
+        { action: Rescuetime::ParseRows, monitor: Verify::Duration },
+        { action: Rescuetime::ParseDateToUtc, monitor: Verify::Duration },
+        { action: Rescuetime::BuildResponse, monitor: Verify::SuccessfulRun }
       ]
-    end
-
-    def self.verifier
-      Verify::Run.new(
-        'Http::Get': Verify::HttpGet,
-        'Rescuetime::BuildResponse': Verify::SuccessfulRun
-      )
     end
   end
 end

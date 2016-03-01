@@ -1,11 +1,9 @@
-require 'light-service'
-
 module Rescuetime
   class BuildResponse
-    extend LightService::Action
-    expects :metric_collector
-    executed do |ctx|
+    def self.execute(ctx)
       ctx[:metrics] = ctx[:metric_collector].metrics
+
+      ctx
     end
   end
 end

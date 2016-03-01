@@ -10,7 +10,7 @@ describe Http::Get do
       http: mock_http
     )
 
-    expect(result.get_response).to eq(response)
+    expect(result.fetch(:get_response)).to eq(response)
   end
 end
 

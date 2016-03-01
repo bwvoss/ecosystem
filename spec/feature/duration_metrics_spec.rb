@@ -8,7 +8,9 @@ describe 'Captures Duration metrics during a rescuetime parse' do
 
     duration_metrics = response[:metrics][:duration]
     actions_measured = duration_metrics.map { |metric| metric[:action] }
-    actions = Rescuetime::SingleDaySync.actions.map(&:to_s)
+    actions = Rescuetime::SingleDaySync.configuration.map do |config|
+      config[:action]
+    end.map(&:to_s)
 
     expect(actions_measured).to eq(actions)
   end
