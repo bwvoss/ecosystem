@@ -5,7 +5,11 @@ module Http
     def self.execute(ctx)
       get_url = ctx.fetch(:get_url)
       http = ctx.fetch(:http, HTTParty)
-      get_response = http.get(get_url)
+      get_response = http.get(
+        get_url,
+        timeout: ENV['HTTP_TIMEOUT_THRESHOLD'].to_f
+      )
+
       ctx[:get_response] = get_response
 
       ctx

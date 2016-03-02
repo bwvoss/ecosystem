@@ -35,7 +35,8 @@ module Rescuetime
         { action: Rescuetime::BuildUrl },
         { action: Http::Get, verifiers:
           [Verify::Non200HttpResponse,
-           Verify::RescuetimeApiKey]
+           Verify::RescuetimeApiKey],
+          protect: HttpTimeout
         },
         { action: Rescuetime::ParseRows },
         { action: Rescuetime::ParseDateToUtc },
