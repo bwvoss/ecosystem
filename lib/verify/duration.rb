@@ -2,7 +2,7 @@ module Verify
   class Duration
     def self.call(action, context)
       start_time = Time.now
-      result = yield
+      context = yield
       duration = Time.now - start_time
 
       context.fetch(:metric_collector) << {
@@ -12,7 +12,7 @@ module Verify
         type: 'duration'
       }
 
-      result
+      context
     end
   end
 end

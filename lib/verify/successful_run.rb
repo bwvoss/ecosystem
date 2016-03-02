@@ -1,14 +1,8 @@
-require 'verify/duration'
-
 module Verify
   class SuccessfulRun
     def self.call(action, context)
       context.fetch(:metric_collector) <<
         build_successful_run_metric(action, context)
-
-      Verify::Duration.call(action, context) do
-        yield
-      end
 
       context
     end

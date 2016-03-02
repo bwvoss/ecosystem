@@ -8,20 +8,20 @@ describe Verify::Duration do
     }
   end
 
-  let(:observe) do
+  let(:observation) do
     described_class.call(Class, mock_context) do
-      2 + 2
+      mock_context[:result] = 2 + 2
+
+      mock_context
     end
   end
 
   it 'executes the given block and returns the result' do
-    result = observe
-
-    expect(result).to eq(4)
+    expect(observation.fetch(:result)).to eq(4)
   end
 
   it 'adds the duration metric' do
-    observe
+    observation.fetch(:result)
 
     metric = mock_context.fetch(:metric_collector).first
     expect(metric[:action]).to eq('Class')

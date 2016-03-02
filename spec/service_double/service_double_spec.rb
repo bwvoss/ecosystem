@@ -48,20 +48,5 @@ describe ServiceDouble do
     expect(status_code).to eq(500)
     expect(response.parsed_response).to eq('Blow up')
   end
-
-  xit 'can hang before responding' do
-    described_class.set(
-      path: path,
-      response: { a: 2 },
-      hang: 0.01
-    )
-
-    response = described_class.inspect(path)
-
-    status_code = response.code
-
-    expect(status_code).to eq(200)
-    expect(parse(response.body)).to eq(a: 2)
-  end
 end
 

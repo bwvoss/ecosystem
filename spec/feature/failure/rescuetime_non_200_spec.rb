@@ -3,21 +3,21 @@ require 'spec_helper'
 describe 'Capturing non 200 errors from rescuetime' do
   let(:error_message) { '500 blow up' }
 
-  xit 'captures the error and returns specific failure identifier' do
+  it 'captures the error and returns specific failure identifier' do
     configure_rescuetime_response(
       code: 500,
       response: error_message
     )
 
-    run_return = run_rescuetime
+    result = run_rescuetime
 
-    expect(run_return.success?).to be_falsey
-    expect(run_return.message).to eq(
+    expect(result.fetch(:failed)).to eq(
       'rescuetime_http_exception'
     )
 
-    expect(result_record['status']).to eq('failure')
-    expect(result_record['error']).to eq("500: #{error_message}")
+    result_record = result.fetch(:metrics).fetch(:run_result).first
+    expect(result_record[:status]).to eq('failure')
+    expect(result_record[:error]).to eq("500: #{error_message}")
   end
 end
 
