@@ -5,8 +5,8 @@ module Rescuetime
 
       ctx[:formatted_date] = formatted_date
       ctx[:get_url] =
-        "#{ctx.fetch(:api_domain)}?"\
-        "key=#{ctx.fetch(:api_key)}&"\
+        "#{ENV['RESCUETIME_API_URL']}?"\
+        "key=#{ENV['RESCUETIME_API_KEY']}&"\
         "restrict_begin=#{formatted_date}&"\
         "restrict_end=#{formatted_date}&"\
         'perspective=interval&'\

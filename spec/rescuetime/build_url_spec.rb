@@ -24,6 +24,7 @@ describe Rescuetime::BuildUrl do
     end
 
     it 'api key' do
+      ENV['RESCUETIME_API_KEY'] = api_key
       expect(querystring_value_for('key', get_url))
         .to eq(api_key)
     end

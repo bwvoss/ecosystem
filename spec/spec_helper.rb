@@ -22,10 +22,10 @@ end
 
 require 'rescuetime/run'
 def run_rescuetime
+  ENV['RESCUETIME_API_URL'] = "#{ServiceDouble::BASE_URL}/rescuetime"
+  ENV['RESCUETIME_API_KEY'] = 'some-test-credential'
   Rescuetime::Run.call(
     run_uuid: 'lsdkfj278',
-    api_domain: "#{ServiceDouble::BASE_URL}/rescuetime",
-    api_key: 'some-test-credential',
     datetime: Time.parse('2015-10-02').utc
   )
 end
