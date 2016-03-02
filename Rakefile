@@ -45,22 +45,6 @@ task :lint do
   system('bundle exec rubocop')
 end
 
-task :flog do
-  require 'flog_score'
-  p 'Running Flog Checks....'
-
-  flog = FlogScore.new('lib')
-  threshold_breached = flog.per_class.any? do |item|
-    item[:score] > 33
-  end
-
-  if threshold_breached
-    fail 'flog threshold breached'
-  else
-    p 'Flog score threshold ok!'
-  end
-end
-
 task :update_audit_data do
   system('bundle exec bundle-audit update')
 end
