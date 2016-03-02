@@ -13,12 +13,12 @@ describe 'Capturing non 200 errors from rescuetime' do
     result = run_rescuetime
 
     expect(result.fetch(:failed)).to eq(
-      'rescuetime_http_timeout'
+      'http_timeout'
     )
 
     result_record = result.fetch(:metrics).fetch(:run_result).first
     expect(result_record[:status]).to eq('failure')
-    expect(result_record[:error]).to eq("Net::ReadTimeout")
+    expect(result_record[:error]).to eq('Net::ReadTimeout')
   end
 end
 
