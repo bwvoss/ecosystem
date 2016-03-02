@@ -2,9 +2,8 @@ module ExceptionHandler
   class HttpTimeout
     def self.call(action, context)
       begin
-       context = yield
+        context = yield
       rescue => e
-
         metrics = context.fetch(:metric_collector)
         metrics << build_error_metric(action, context, e.message)
         context[:failed] = 'http_timeout'
