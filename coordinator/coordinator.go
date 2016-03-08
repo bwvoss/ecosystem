@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 )
 
 func check(e error) {
@@ -14,7 +15,9 @@ func check(e error) {
 }
 
 func RunRescuetime(url string) {
-	response, err := http.Get(url)
+	timeout := time.Duration(5 * time.Second)
+	client := http.Client{Timeout: timeout}
+	response, err := client.Get(url)
 	check(err)
 
 	defer response.Body.Close()
