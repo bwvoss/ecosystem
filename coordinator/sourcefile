@@ -1,0 +1,2 @@
+export GOPATH=/Users/benvoss/Projects/OpenSource/ecosystem/coordinator
+export PATH=$PATH:$GOPATH/bin

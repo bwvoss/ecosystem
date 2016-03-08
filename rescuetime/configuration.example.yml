@@ -1,5 +1,0 @@
-development: &common
-  rescuetime_api_key: "fill in"
-
-test:
-  <<: *common

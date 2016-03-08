@@ -1,0 +1,4 @@
+*.coverprofile
+bin/
+pkg/
+src/
