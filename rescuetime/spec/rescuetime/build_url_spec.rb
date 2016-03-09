@@ -15,7 +15,6 @@ describe Rescuetime::BuildUrl do
 
     let(:get_url) do
       result = described_class.execute(
-        api_domain: 'http://www.example.com',
         api_key: api_key,
         datetime: datetime
       )

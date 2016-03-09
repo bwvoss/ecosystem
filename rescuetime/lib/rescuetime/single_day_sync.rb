@@ -42,6 +42,12 @@ module Rescuetime
     end
 
     def self.configuration
+      # chain [
+        # Rescuetime::BuildUrl,
+        # Http::Get.on_error(HttpTimeout, BuildResponse).on_success(Non200HttpResponse, ValidApiKey),
+        # Rescuetime::ParseRows,
+        # Rescuetime::ParseDateToUtc.on_success(AddSuccessfulRunMetric, BuildResponse)
+      # ]
       [
         {
           action: Rescuetime::BuildUrl

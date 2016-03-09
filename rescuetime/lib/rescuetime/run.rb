@@ -7,8 +7,7 @@ module Rescuetime
       Rescuetime::SingleDaySync.call(
         metric_collector: Metric::Receiver.new,
         run_uuid: configuration.fetch(:run_uuid),
-        datetime: configuration.fetch(:datetime),
-        timezone: 'America/Chicago'
+        datetime: configuration.fetch(:datetime)
       )
     end
   end

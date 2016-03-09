@@ -24,6 +24,7 @@ require 'rescuetime/run'
 def run_rescuetime
   ENV['RESCUETIME_API_URL'] = "#{HttpTestHarness::BASE_URL}/rescuetime"
   ENV['RESCUETIME_API_KEY'] = 'some-test-credential'
+  ENV['TIMEZONE'] = 'America/Chicago'
   Rescuetime::Run.call(
     run_uuid: 'lsdkfj278',
     datetime: Time.parse('2015-10-02').utc

@@ -6,35 +6,17 @@ namespace :rescuetime do
   require 'securerandom'
 
   task :sync do
-    dates = [
-      Time.parse('2015-10-23').utc,
-      Time.parse('2015-10-24').utc,
-      Time.parse('2015-10-25').utc,
-      Time.parse('2015-10-26').utc,
-      Time.parse('2015-10-27').utc,
-      Time.parse('2015-10-28').utc,
-      Time.parse('2015-10-29').utc,
-      Time.parse('2015-10-30').utc,
-      Time.parse('2015-10-31').utc
-    ]
+    date = Time.parse('2015-10-23').utc
+    run_uuid = SecureRandom.uuid
+    p "run uuid is: #{run_uuid}"
 
-    dates.each do |date|
-      run_uuid = SecureRandom.uuid
-      p "run uuid is: #{run_uuid}"
-
-      Rescuetime::SingleDaySync.call(
-        run_uuid: run_uuid,
-        api_domain: 'https://www.rescuetime.com/anapi/data',
-        api_key: configs['rescuetime_api_key'],
-        datetime: date,
-        timezone: 'America/Chicago'
-      )
-    end
+    ENV['RESCUETIME_API_URL'] = 'https://www.rescuetime.com/anapi/data'
+    ENV['TIMEZONE'] = 'America/Chicago'
+    Rescuetime::SingleDaySync.call(
+      run_uuid: run_uuid,
+      datetime: date
+    )
   end
-end
-
-task :collectd do
-  system('sudo collectd -f -C collectd.conf')
 end
 
 task :spec do
