@@ -1,7 +1,7 @@
-require 'service_double/service_double'
-require 'service_double/server'
+require 'http_test_harness/http_test_harness'
+require 'http_test_harness/server'
 
-describe ServiceDouble do
+describe HttpTestHarness do
   let(:path) { '/test_path' }
 
   def parse(response)

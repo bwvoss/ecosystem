@@ -1,4 +1,4 @@
-require 'service_double/service_double'
+require 'http_test_harness/http_test_harness'
 require 'test_data/rescuetime_response'
 
 def rescuetime_config
@@ -15,14 +15,14 @@ def configure_rescuetime_response(config = rescuetime_config)
                 '&restrict_end=2015-10-02&perspective=interval'\
                 '&resolution_time=minute&format=json'
 
-  ServiceDouble.set(
+  HttpTestHarness.set(
     { path: "/rescuetime#{querystring}" }.merge(config)
   )
 end
 
 require 'rescuetime/run'
 def run_rescuetime
-  ENV['RESCUETIME_API_URL'] = "#{ServiceDouble::BASE_URL}/rescuetime"
+  ENV['RESCUETIME_API_URL'] = "#{HttpTestHarness::BASE_URL}/rescuetime"
   ENV['RESCUETIME_API_KEY'] = 'some-test-credential'
   Rescuetime::Run.call(
     run_uuid: 'lsdkfj278',

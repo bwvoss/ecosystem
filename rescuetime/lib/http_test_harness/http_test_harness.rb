@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-module ServiceDouble
+module HttpTestHarness
   BASE_URL = 'http://localhost:9292'
 
   def self.set(config)

@@ -1,11 +1,11 @@
 require 'rack/test'
-require 'service_double/server'
+require 'http_test_harness/server'
 
-describe ServiceDouble::Server do
+describe HttpTestHarness::Server do
   include Rack::Test::Methods
 
   def app
-    ServiceDouble::Server.new
+    HttpTestHarness::Server.new
   end
 
   it 'blows up on paths not registered' do

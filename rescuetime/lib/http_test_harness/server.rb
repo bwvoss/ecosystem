@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'json'
 
-module ServiceDouble
+module HttpTestHarness
   class Server < Sinatra::Base
     PATH_RESPONSES = {}
 

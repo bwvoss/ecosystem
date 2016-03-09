@@ -55,7 +55,7 @@ end
 
 task default: %w(spec lint audit_gems)
 
-task :service_double do
-  system('cd lib/service_double/ && rackup config.ru')
+task :http_test_harness do
+  system('cd lib/http_test_harness/ && rackup config.ru')
 end
 

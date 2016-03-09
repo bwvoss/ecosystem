@@ -113,7 +113,7 @@ DEPENDENCIES
   activesupport (~> 4.2.4)
   bundler-audit (~> 0.4.0)
   flog (~> 4.3.2)
-  grape
+  grape (~> 0.14.0)
   httparty (~> 0.10.0)
   pry (~> 0.10.0)
   rack-test (~> 0.6.3)
