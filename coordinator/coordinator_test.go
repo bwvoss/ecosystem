@@ -4,11 +4,10 @@ import (
 	"../coordinator"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"io/ioutil"
 )
 
 var _ = Describe("Coordinator", func() {
-	It("persists metrics and rescuetime intervals", func() {
+	It("puts the response in the commit log", func() {
 		json := []byte(`
 		  {
 		  	"path":"/rescuetime?date=2009-11-10&api_key=123asdf",
@@ -32,12 +31,12 @@ var _ = Describe("Coordinator", func() {
 
 		url := "http://localhost:9292/rescuetime?date=2009-11-10&api_key=123asdf"
 
-		context := coordinator.Context{Url: url, Timeout: 5}
+		context := coordinator.Context{Url: url, Timeout: 5, CommitLog: &coordinator.CommitLog{}}
 		coordinator.RunRescuetime(&context)
 
-		persisted, _ := ioutil.ReadFile("rescuetime_response.json")
+		latestCommit := string(context.CommitLog.LatestCommit())
 
-		Ω(persisted).Should(ContainSubstring("[{\"activity\":\"programming\"}]"))
-		Ω(persisted).Should(ContainSubstring("{\"duration\":[{\"duration\":1.2}]"))
+		Expect(latestCommit).To(
+			Equal("INSERT:{\"rescuetime_intervals\":[{\"activity\":\"programming\"}],\"metrics\":{\"duration\":[{\"duration\":1.2}]}}"))
 	})
 })

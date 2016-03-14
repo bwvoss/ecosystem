@@ -1,21 +1,20 @@
 package coordinator
 
 import (
-	"errors"
 	//"fmt"
+	"errors"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"time"
 )
 
 type Context struct {
-	Timeout  float64
-	Url      string
-	response *http.Response
-	contents []byte
-	file     *os.File
-	Err      error
+	Timeout   float64
+	Url       string
+	response  *http.Response
+	contents  []byte
+	CommitLog *CommitLog
+	Err       error
 }
 
 func RunRescuetime(context *Context) {
@@ -23,8 +22,7 @@ func RunRescuetime(context *Context) {
 		makeGetRequest,
 		getContents,
 		verifyOkStatusCode,
-		createFile,
-		saveData,
+		appendCommitLog,
 	}
 
 	for _, action := range actions {
@@ -55,12 +53,7 @@ func verifyOkStatusCode(context *Context) {
 	}
 }
 
-func createFile(context *Context) {
-	context.file, context.Err = os.Create("rescuetime_response.json")
-}
-
-func saveData(context *Context) {
-	file := context.file
-	defer file.Close()
-	_, context.Err = file.Write(context.contents)
+func appendCommitLog(context *Context) {
+	commit := append([]byte{'I', 'N', 'S', 'E', 'R', 'T', ':'}, context.contents...)
+	context.Err = context.CommitLog.AppendCommit(commit)
 }
