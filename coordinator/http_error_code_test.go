@@ -12,11 +12,12 @@ var _ = Describe("When an http request timesout", func() {
 		  {
 		  	"path":"/http_error",
 		  	"code": 500,
-				"response": { "error": "No good" },
+				"response": "error: No good"
 		  }
 	  `)
 
 		err := coordinator.PrepareServiceResponse(json)
+
 		if err != nil {
 			Fail(err.Error())
 		}
@@ -27,6 +28,6 @@ var _ = Describe("When an http request timesout", func() {
 
 		coordinator.RunRescuetime(&context)
 
-		Expect(context.Err.Error()).To(Equal("Non-200 response"))
+		Expect(context.Err.Error()).To(Equal("\"error: No good\""))
 	})
 })
