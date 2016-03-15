@@ -31,7 +31,7 @@ var _ = Describe("Coordinator", func() {
 
 		url := "http://localhost:9292/rescuetime?date=2009-11-10&api_key=123asdf"
 
-		context := coordinator.Context{Url: url, Timeout: 5, CommitLog: &coordinator.CommitLog{}}
+		context := coordinator.Context{Url: url, Timeout: 5, CommitLog: &coordinator.InMemoryCommitLog{}}
 		coordinator.RunRescuetime(&context)
 
 		latestCommit := string(context.CommitLog.LatestCommit())

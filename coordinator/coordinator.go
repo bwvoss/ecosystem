@@ -13,7 +13,7 @@ type Context struct {
 	Url       string
 	response  *http.Response
 	contents  []byte
-	CommitLog *CommitLog
+	CommitLog CommitLog
 	Err       error
 }
 
