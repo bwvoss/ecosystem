@@ -8,15 +8,6 @@ import (
 	"time"
 )
 
-type Context struct {
-	Timeout   float64
-	Url       string
-	response  *http.Response
-	contents  []byte
-	CommitLog CommitLog
-	Err       error
-}
-
 func RunRescuetime(context *Context) {
 	actions := []func(*Context){
 		makeGetRequest,
@@ -25,13 +16,7 @@ func RunRescuetime(context *Context) {
 		appendCommitLog,
 	}
 
-	for _, action := range actions {
-		if context.Err != nil {
-			break
-		}
-
-		action(context)
-	}
+	Run(context, actions)
 }
 
 func makeGetRequest(context *Context) {
