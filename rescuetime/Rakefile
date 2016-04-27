@@ -2,21 +2,21 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'yaml'
 
 namespace :rescuetime do
-  require 'rescuetime/run'
-  require 'securerandom'
+  # require 'rescuetime/run'
+  # require 'securerandom'
 
-  task :sync do
-    date = Time.parse('2015-10-23').utc
-    run_uuid = SecureRandom.uuid
-    p "run uuid is: #{run_uuid}"
+  # task :sync do
+  # date = Time.parse('2015-10-23').utc
+  # run_uuid = SecureRandom.uuid
+  # p "run uuid is: #{run_uuid}"
 
-    ENV['RESCUETIME_API_URL'] = 'https://www.rescuetime.com/anapi/data'
-    ENV['TIMEZONE'] = 'America/Chicago'
-    Rescuetime::SingleDaySync.call(
-      run_uuid: run_uuid,
-      datetime: date
-    )
-  end
+  # ENV['RESCUETIME_API_URL'] = 'https://www.rescuetime.com/anapi/data'
+  # ENV['TIMEZONE'] = 'America/Chicago'
+  # Rescuetime::SingleDaySync.call(
+  # run_uuid: run_uuid,
+  # datetime: date
+  # )
+  # end
 end
 
 task :spec do
@@ -38,6 +38,6 @@ end
 task default: %w(spec lint audit_gems)
 
 task :http_test_harness do
-  system('cd lib/http_test_harness/ && rackup config.ru')
+  system('rackup config.ru')
 end
 

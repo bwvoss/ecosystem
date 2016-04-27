@@ -4,9 +4,10 @@ describe 'Rescuetime Data Parsing' do
   it 'parses rescuetime data' do
     configure_rescuetime_response
 
-    response = run_rescuetime
+    response, error = run_rescuetime
 
-    expect(response[:rescuetime_rows].count).to eq(5)
+    expect(response.count).to eq(5)
+    expect(error).to be_nil
   end
 end
 

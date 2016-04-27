@@ -1,24 +1,18 @@
 require 'spec_helper'
 
-describe 'Capturing non 200 errors from rescuetime' do
-  let(:error_message) { '500 blow up' }
-
+describe 'Rescuetime http timeouts' do
   it 'captures the error and returns specific failure identifier' do
-    ENV['HTTP_TIMEOUT_THRESHOLD'] = '0.25'
+    ENV['HTTP_TIMEOUT_THRESHOLD'] = '0.15'
     configure_rescuetime_response(
-      hang: 0.5,
+      hang: 0.25,
       response: {}
     )
 
-    result = run_rescuetime
+    _, error = run_rescuetime
 
-    expect(result.fetch(:failed)).to eq(
-      'http_timeout'
+    expect(error).to eq(
+      :http_timeout
     )
-
-    result_record = result.fetch(:metrics).fetch(:run_result).first
-    expect(result_record[:status]).to eq('failure')
-    expect(result_record[:error]).to eq('Net::ReadTimeout')
   end
 end
 

@@ -22,4 +22,4 @@ Metrics/MethodLength:
   Max: 15
 
 Metrics/ClassLength:
-  Max: 30
+  Max: 50

@@ -9,15 +9,11 @@ describe 'Capturing non 200 errors from rescuetime' do
       response: error_message
     )
 
-    result = run_rescuetime
+    _, error = run_rescuetime
 
-    expect(result.fetch(:failed)).to eq(
-      'rescuetime_http_exception'
+    expect(error).to eq(
+      :rescuetime_http_exception
     )
-
-    result_record = result.fetch(:metrics).fetch(:run_result).first
-    expect(result_record[:status]).to eq('failure')
-    expect(result_record[:error]).to eq("500: #{error_message}")
   end
 end
 

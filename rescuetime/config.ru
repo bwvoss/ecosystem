@@ -1,3 +1,3 @@
-require_relative 'server'
+require 'http_test_harness'
 
 run HttpTestHarness::Server
