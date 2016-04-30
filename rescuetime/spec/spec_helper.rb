@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'http_test_harness'
 
 module TestData
@@ -44,8 +46,8 @@ def configure_rescuetime_response(config = rescuetime_config)
   )
 end
 
-require 'rescuetime/fetch'
-require 'rescuetime/fetch_handler'
+require 'fetch'
+require 'fetch_handler'
 
 def run_rescuetime
   ENV['RESCUETIME_API_URL'] = "#{HttpTestHarness::BASE_URL}/rescuetime"

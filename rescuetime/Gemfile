@@ -8,6 +8,7 @@ gem 'chocolate_shell', path: '../../chocolate_shell'
 group :development do
   gem 'pry', '~> 0.10.0'
   gem 'bundler-audit', '~> 0.4.0'
+  gem 'simplecov'
   gem 'flog', '~> 4.3.2', require: false
   gem 'rubocop', '~> 0.39.0', require: false
 end
